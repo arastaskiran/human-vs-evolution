@@ -1,0 +1,20 @@
+{
+    "typescript.format.enable": false,
+    "files.exclude": {
+        //"src/assets**": true
+    },
+    "search.exclude": {
+        "src/assets**": true
+    },
+    "intelephense.files.exclude": [
+        "**/.git/**",
+        "**/.svn/**",
+        "**/.hg/**",
+        "**/CVS/**",
+        "**/.DS_Store/**",
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/vendor/**/{Test,test,Tests,tests}/**",
+        "src/assets/**"
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Attach to Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://localhost:5500",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach to Edge",
+            "port": 9222,
+            "request": "attach",
+            "type": "pwa-msedge",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch Edge",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        },      
+        {
+            "name": "Launch Microsoft Edge and open the Edge DevTools",
+            "request": "launch",
+            "port": 9222,
+            "type": "vscode-edge-devtools.debug",
+            "url": "http://localhost:5500",
+        },
+        {
+            "trace": true,
+            "name": "Chrome Debug",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:5500/",
+            "webRoot": "${workspaceRoot}/",  // folder containing webpack.config.js
+            //"userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "program": "${workspaceFolder}/app.js",
+            "sourceMaps": true,
+            "disableNetworkCache": true,
+            // we have multiple js source folders, so some source maps are still generated with webpack protocol links. Don't know why?
+            "sourceMapPathOverrides": { 
+                "webpack:///src/*": "${webRoot}/*", // if you override this, you MUST provide all defaults again
+                "webpack:///./~/*": "${webRoot}/node_modules/*",  // a default
+                "webpack:///./*":   "${webRoot}/js-src/*",        // unsure how/why webpack generates ./links.js
+                "webpack:///../*": "${webRoot}/js-src/*",         // unsure how/why webpack generates ../links.js
+                "webpack:///*":     "*"                           // a default, catch everything else
+            },
+            
+        }
+    ]
+}
