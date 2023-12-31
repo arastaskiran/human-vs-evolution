@@ -2,20 +2,16 @@ import { Config } from "./config";
 import { Events } from "./events/app_events";
 import { Product } from "./models/product";
 import { Evolution } from "./models/evolution";
-const injectCSS = (css) => {
-    let el = document.createElement("style");
-    el.type = "text/css";
-    el.innerText = css;
-    document.head.appendChild(el);
-    return el;
-};
-export class BaseScene {
+import { EvolutionScene } from "./models/evolution_scene";
+
+export class BaseScene extends EvolutionScene {
     /**
      *
      * @param {Config} config
      * @param {Events} event_bus
      */
     constructor(config, event_bus) {
+        super();
         this.canvas_id = config.canvas_id;
         this.canvas = null;
         this.context = null;
@@ -24,11 +20,32 @@ export class BaseScene {
         this.game_timer = null;
         this.is_running = false;
         this.update_rate = 1000;
+        this.city_sound = null;
+        this.first_click = false;
         this._createScene();
+        this._loadAudios();
+        this._initEvents();
+    }
+
+    _initEvents() {
+        var self = this;
+        document.addEventListener("click", (e) => {
+            if (!self.first_click) {
+                if (self.city_sound != null) {
+                    if (self.city_sound.paused) self.city_sound.play();
+                }
+
+                self.first_click = true;
+            }
+        });
+    }
+
+    _loadAudios() {
+        this.city_sound = this.__insertSoundObject(this.config.city_sound);
     }
 
     _createScene() {
-        injectCSS(
+        this.injectCSS(
             `#${this.canvas_id} {
                 width:95%;
                 height:100%;
