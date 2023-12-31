@@ -10,7 +10,7 @@
 </head>
 
 <body style="background: black;">
-    <div id="blue_tomb"></div>
+    <div id="earth"></div>
 
 
 
@@ -21,36 +21,80 @@
 </body>
 <script src="build/app.bundle.js?v=1.1.1"></script>
 <script>
-    BlueTombStone.settings.init({
-        use_music: true,
-        canvas_id: "blue_tomb",
-        width: "100%",
-        height: "100%",
-        theme_music: "http://portal.blue.demo/sounds/goodbye_theme.mp3",
-        hover_sound: "http://portal.blue.demo/sounds/bluetomb_hover.wav",
-        background_image: "http://portal.blue.demo/img/goodbye_theme.jpg",
-        modal_open_sound: "http://portal.blue.demo/sounds/bluetomb_modalopen.wav",
-        drop_sound: "http://portal.blue.demo/sounds/bluetomb_drop.wav",
-        user_name: "Demo",
-        user_email: "demo@demo.com",
-        user_avatar: "http://portal.blue.demo/img/default.png",
-        register_date: 511721991,
-        death_date: 1802051536,
-        init: false,
-        fps: 16,
-        mouse_leave: "http://portal.blue.demo/sounds/bluetomb_mouseleave.wav",
-        mouse_click: "http://portal.blue.demo/sounds/bluetomb_mouseclick.wav",
-        rain_sound: "http://portal.blue.demo/sounds/bluetomb_rain.mp3",
-        warn_text: "Your account will be permanently deleted shortly!",
-        recover_text: "RECOVER",
-        logout_text: "LOGOUT",
-        crow_sound: "http://portal.blue.demo/sounds/bluetomb_ambicent_crow.wav",
-        error_sound: "http://portal.blue.demo/sounds/bluetomb_error_sound.wav",
-        key_sound: "http://portal.blue.demo/sounds/bluetomb_key.wav",
-        activate_ep:"http://portal.blue.demo/activate",
-        logout_ep:"http://portal.blue.demo/logout",
-        notification_token:"",
-        csrf_token:"",
+    HumanVsEvolution.settings.init({
+        canvas_id: "earth",
+        product_list: [{
+                name: "Refrigerator A",
+                space: 0.751,
+                price: 999.9
+            },
+            {
+                name: "Cell phone",
+                space: 0.00000899,
+                price: 2199.12
+            },
+            {
+                name: "TV 55",
+                space: 0.4,
+                price: 4346.99
+            },
+            {
+                name: "TV 50",
+                space: 0.29,
+                price: 3999.9
+            },
+            {
+                name: "TV 42",
+                space: 0.2,
+                price: 2999.9
+            },
+            {
+                name: "Notebook A",
+                space: 0.0035,
+                price: 2499.9
+            },
+            {
+                name: "Ventilator",
+                space: 0.496,
+                price: 199.9
+            },
+            {
+                name: "Microwave A",
+                space: 0.0424,
+                price: 308.66
+            },
+            {
+                name: "Microwave B",
+                space: 0.0544,
+                price: 429.9
+            },
+            {
+                name: "Microwave C",
+                space: 0.0319,
+                price: 299.29
+            },
+            {
+                name: "Refrigerator B",
+                space: 0.635,
+                price: 849.0
+            },
+            {
+                name: "Refrigerator C",
+                space: 0.87,
+                price: 1199.89
+            },
+            {
+                name: "Notebook B",
+                space: 0.498,
+                price: 1999.9
+            },
+            {
+                name: "Notebook C",
+                space: 0.527,
+                price: 3999.0
+            },
+
+        ]
 
     }).on("loaded", () => {
         console.log("loaded");

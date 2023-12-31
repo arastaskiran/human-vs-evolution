@@ -10,7 +10,7 @@ module.exports = {
         //path: path.resolve(__dirname, 'build'),
         filename: 'app.bundle.js',
         libraryTarget: 'umd',
-        library: 'BlueTombStone',
+        library: 'HumanVsEvolution',
         umdNamedDefine: true
 
     },
