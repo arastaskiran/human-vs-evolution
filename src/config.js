@@ -5,6 +5,7 @@ export class Config {
         this.height = "100%";
         this.init = false;
         this.fps = 24;
+        this.product_list=[];
         this.container_image =
             "https://assets.humanvsevolution.com/cargo_game/container.webp";
         this.city_sound =

@@ -22,6 +22,8 @@ export class BaseScene extends EvolutionScene {
         this.update_rate = 1000;
         this.city_sound = null;
         this.first_click = false;
+        this.product_list = [];
+        this.user_selected=[];
         this._createScene();
         this._loadAudios();
         this._initEvents();
@@ -59,6 +61,15 @@ export class BaseScene extends EvolutionScene {
         this.canvas.setAttribute("id", this.canvas_id);
         this.context = this.canvas.getContext("2d");
         document.getElementById(this.config.canvas_id).appendChild(this.canvas);
+        this._loadProducts();
+    }
+
+    _loadProducts() {
+        var self = this;
+        this.config.product_list.forEach((r) => {
+            self.product_list.push(new Product(r.name, r.space, r.price,r.image));
+        });
+       
     }
 
     _srartGame() {
