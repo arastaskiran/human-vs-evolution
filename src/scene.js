@@ -1,6 +1,7 @@
 import { Config } from "./config";
 import { Events } from "./events/app_events";
 import { HomeScreen } from "./views/vw_home";
+import { InventoryScreen } from "./views/vw_inventory";
 import { BaseScene } from "./base_scane";
 
 export class Scene extends BaseScene {
@@ -14,8 +15,9 @@ export class Scene extends BaseScene {
 
         this.screens = {
             home: new HomeScreen(this),
+            inventory: new InventoryScreen(this)
         };
-        this.current_screen = "home";
+        this.current_screen = "inventory";
         this.setFPS(config.fps);
         this._srartGame();
     }

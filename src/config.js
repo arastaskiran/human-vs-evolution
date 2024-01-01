@@ -27,6 +27,11 @@ export class Config {
             "https://assets.humanvsevolution.com/cargo_game/mouseleave.wav";
         this.rain_sound =
             "https://assets.humanvsevolution.com/cargo_game/rain_sound.mp3";
+        this.user_monkey =
+            "https://assets.humanvsevolution.com/cargo_game/user_monkey.jpeg";
+        this.inventory_box =
+            "https://assets.humanvsevolution.com/cargo_game/inventory_box.png";
+        this.box = "https://assets.humanvsevolution.com/cargo_game/box.png";
     }
 
     mapConfig(data) {

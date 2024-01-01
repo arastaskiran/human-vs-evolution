@@ -1,10 +1,25 @@
 import { BaseView } from "./base_view";
+import { Button } from "../models/button";
+import { HeartBeat } from "../models/heart_beat";
 
 export class HomeScreen extends BaseView {
     constructor(screen) {
         super("home", screen);
         this.base_image = new Image();
+        this.play_button = new Button(
+            this.screen,
+            "Test",
+            "#22b324",
+            "#f7eeed",
+            80,
+            50,
+            50,
+            10
+        );
         this._init();
+
+        this.play_button.visible();
+        this.hb = new HeartBeat(screen, 50,50,70, 30, "red");
     }
 
     _init() {
@@ -17,8 +32,10 @@ export class HomeScreen extends BaseView {
 
     update() {
         this.getContext().save();
-        this.drawBG();
+        this.drawBG();       
         this.getContext().restore();
+        this.play_button.update();
+        this.hb.update();
     }
 
     drawBG() {

@@ -6,8 +6,8 @@ export class Button extends BaseView {
      *
      * @param {Scene} scene
      */
-    constructor(scene, text, color, fontcolor, x, y, w, h) {
-        super("button", scene);
+    constructor(screen, text, color, fontcolor, x, y, w, h) {
+        super("button", screen);
         this.text = text;
         this.color = color;
         this.fontcolor = fontcolor;
@@ -24,14 +24,14 @@ export class Button extends BaseView {
 
         this.__loadMusic();
         var bu = this;
-        this.scene.canvas.addEventListener(
+        this.screen.canvas.addEventListener(
             "click",
             function (e) {
                 bu.__checkClick(e);
             },
             false
         );
-        this.scene.canvas.addEventListener(
+        this.screen.canvas.addEventListener(
             "mousemove",
             function (e) {
                 bu.__checkMouseOver(e);
@@ -138,10 +138,10 @@ export class Button extends BaseView {
         }
     }
     inBounds(mouseX, mouseY) {
-        var rateX = this.scene.canvas.offsetWidth / this.scene.canvas.width;
-        var rateY = this.scene.canvas.offsetHeight / this.scene.canvas.height;
-        var offsetX = this.scene.canvas.offsetLeft;
-        var offsetY = this.scene.canvas.offsetTop;
+        var rateX = this.screen.canvas.offsetWidth / this.screen.canvas.width;
+        var rateY = this.screen.canvas.offsetHeight / this.screen.canvas.height;
+        var offsetX = this.screen.canvas.offsetLeft;
+        var offsetY = this.screen.canvas.offsetTop;
 
         var x = rateX * this.x + offsetX;
         var y = rateY * this.y + offsetY;
@@ -152,9 +152,9 @@ export class Button extends BaseView {
     }
 
     __loadMusic() {
-        this.hover_sound = this.__insertSoundObject(this.config.hover_sound);
-        this.leave_sound = this.__insertSoundObject(this.config.mouse_leave);
-        this.click_sound = this.__insertSoundObject(this.config.mouse_click);
+        this.hover_sound = this.__insertSoundObject(this.config.mouse_hover_sound);
+        this.leave_sound = this.__insertSoundObject(this.config.mouse_leave_sound);
+        this.click_sound = this.__insertSoundObject(this.config.mouse_click_sound);
     }
 
     __pauseAll() {
