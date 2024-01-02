@@ -23,7 +23,7 @@ export class BaseScene extends EvolutionScene {
         this.city_sound = null;
         this.first_click = false;
         this.product_list = [];
-        this.user_selected=[];
+        this.user_selected = [];
         this._createScene();
         this._loadAudios();
         this._initEvents();
@@ -67,9 +67,9 @@ export class BaseScene extends EvolutionScene {
     _loadProducts() {
         var self = this;
         this.config.product_list.forEach((r) => {
-            self.product_list.push(new Product(r.name, r.space, r.price,r.image));
+            self.product_list.push(new Product(r.name, r.space, r.price, r.image));
         });
-       
+
     }
 
     _srartGame() {
@@ -100,6 +100,10 @@ export class BaseScene extends EvolutionScene {
 
     setView(view_name) {
         if (typeof this.screens[view_name] === "undefined") return;
+        if (typeof this.screens[this.current_screen] !== "undefined") {
+            this.screens[this.current_screen].close();
+        }
+        this.screens[view_name].open();
         this.current_screen = view_name;
     }
 
@@ -108,8 +112,11 @@ export class BaseScene extends EvolutionScene {
     }
 
     _getCurrentScreen() {
-        if (typeof this.screens[this.current_screen] === "undefined")
+        if (typeof this.screens[this.current_screen] === "undefined") {
+            this.setView("home");
             return this.screens.home;
+        }
+
 
         return this.screens[this.current_screen];
     }

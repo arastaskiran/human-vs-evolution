@@ -38,6 +38,10 @@ export class BaseView extends EvolutionScene {
         this.onClose();
     }
 
+    dispose(){
+        
+    }
+
     assetLoaded(name) {
         if (this.asset_status.includes(name)) return;
         this.asset_status.push(name);

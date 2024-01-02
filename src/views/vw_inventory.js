@@ -30,7 +30,7 @@ export class InventoryScreen extends BaseView {
 
         this.play_button.visible();
         this.hb = new HeartBeat(screen, 65, 18, 74, 20, "#ddfac0");
-        this.product_selector = new ProductSelector(screen, 212, 7, 77, 115);
+        this.product_selector = new ProductSelector(screen,this.screen.product_list, 212, 7, 77, 115);
     }
 
     _init() {
@@ -39,6 +39,14 @@ export class InventoryScreen extends BaseView {
         this.base_image.onload = function () {
             self.assetLoaded("base_image");
         };
+    }
+
+    onLoad() {
+        this.product_selector.open();
+    }
+
+    onClose() {
+        this.product_selector.close();
     }
 
     update() {
