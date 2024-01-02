@@ -53,7 +53,7 @@ export class BaseScene extends EvolutionScene {
                 height:100%;
                 overflow: hidden!important;
                 position: fixed;
-                padding-left: 5%;
+               
                 
             }`
         );
