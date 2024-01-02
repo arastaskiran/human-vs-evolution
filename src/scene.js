@@ -17,7 +17,7 @@ export class Scene extends BaseScene {
             home: new HomeScreen(this),
             inventory: new InventoryScreen(this)
         };
-        this.current_screen = "inventory";
+        this.setView("inventory");
         this.setFPS(config.fps);
         this._srartGame();
     }
