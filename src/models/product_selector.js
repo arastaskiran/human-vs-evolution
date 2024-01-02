@@ -26,7 +26,6 @@ export class ProductSelector extends BaseView {
         this._loadEvents();
         this.__loadProducts(items)
         this.__loadMusic();
-
     }
 
     __loadMusic() {
@@ -40,14 +39,10 @@ export class ProductSelector extends BaseView {
         return this;
     }
 
-
-
     paddingTop(padd) {
         this.padding_top = padd;
         return this;
     }
-
-
 
     __loadProducts(items) {
         var self = this;
@@ -133,11 +128,6 @@ export class ProductSelector extends BaseView {
     }
 
     update() {
-        // var ctx=this.getContext();
-        // ctx.save();
-        // ctx.fillStyle = "black";
-        // ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.restore();
         this._drawItems();
     }
 
@@ -151,12 +141,9 @@ export class ProductSelector extends BaseView {
     }
 
     _drawItems() {
-
         var row = 0;
         var col = 0;
-
         var free = this._getFreeProducts();
-
         for (var i = 0; i < free.length; i++) {
             var p = free[i];
             if ((i) % 2 == 0 && i > 0) {
@@ -165,21 +152,11 @@ export class ProductSelector extends BaseView {
             }
             var x = this.padding_left + this.x + (col * (p.width + this.padding_left));
             var y = this.padding_top + this.y + (row * (p.height + this.padding_top));
-
             p.setCoordinate(x, y);
             p.update();
             col++;
-
-
         }
-
-
-
-
     }
-
-
-
 
     _inBounds(mouseX, mouseY) {
 
@@ -196,9 +173,6 @@ export class ProductSelector extends BaseView {
 
         return !(mouseX < x || mouseX > x + w || mouseY < y || mouseY > y + h);
     }
-
-
-
 
     _getFreeProducts() {
         var self = this;
