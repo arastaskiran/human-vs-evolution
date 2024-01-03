@@ -5,6 +5,7 @@ export class Config {
         this.height = "100%";
         this.init = false;
         this.fps = 24;
+        this.orient_phone="https://assets.humanvsevolution.com/cargo_game/rotate_device.jpg";
         this.product_list=[];
         this.container_image =
             "https://assets.humanvsevolution.com/cargo_game/container.webp";

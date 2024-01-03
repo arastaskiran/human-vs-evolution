@@ -3,6 +3,7 @@ import { Events } from "./events/app_events";
 import { Product } from "./models/product";
 import { Evolution } from "./models/evolution";
 import { EvolutionScene } from "./models/evolution_scene";
+import { OrientationChange } from "./views/vw_change_orient";
 
 export class BaseScene extends EvolutionScene {
     /**
@@ -23,10 +24,11 @@ export class BaseScene extends EvolutionScene {
         this.city_sound = null;
         this.first_click = false;
         this.product_list = [];
-        this.user_selected = [];
+        this.user_selected = [];       
         this._createScene();
         this._loadAudios();
         this._initEvents();
+        this.screen_protection = new OrientationChange(this);
     }
 
     _initEvents() {
@@ -67,9 +69,10 @@ export class BaseScene extends EvolutionScene {
     _loadProducts() {
         var self = this;
         this.config.product_list.forEach((r) => {
-            self.product_list.push(new Product(r.name, r.space, r.price, r.image));
+            self.product_list.push(
+                new Product(r.name, r.space, r.price, r.image)
+            );
         });
-
     }
 
     _srartGame() {
@@ -108,7 +111,21 @@ export class BaseScene extends EvolutionScene {
     }
 
     _render(self) {
+        if (self._mobileCheck() && self._isPortrait()) {
+            self.screen_protection.update();
+            return;
+        }
         self._getCurrentScreen().update();
+    }
+
+    _mobileCheck() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent
+        );
+    }
+
+    _isPortrait() {
+        return window.matchMedia("(orientation: portrait)").matches;
     }
 
     _getCurrentScreen() {
@@ -116,7 +133,6 @@ export class BaseScene extends EvolutionScene {
             this.setView("home");
             return this.screens.home;
         }
-
 
         return this.screens[this.current_screen];
     }
