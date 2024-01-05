@@ -10,8 +10,8 @@ export class OrientationChange extends BaseView {
         this._init();
         this.x = 60;
         this.y = 20;
-        this.w = 150;
-        this.h = 70;
+        this.w = 200;
+        this.h = 80;
     }
 
     _init() {
@@ -29,24 +29,35 @@ export class OrientationChange extends BaseView {
         ctx.clearRect(0, 0, this.screenWidth(), this.screenHeight());
         ctx.save();
 
-        var x = this.screenWidth() / 2 - this.w / 2;
-        ctx.translate((x + this.w / 2), (this.y + this.h / 2));
-        ctx.rotate(this.rotation * (Math.PI / 180));
-       
-        ctx.translate(-(x + this.w / 2), -(this.y + this.h / 2));
+        var x =
+            this.screenWidth() / 2 - this.w / 2;
         ctx.drawImage(this.phone_image, x, this.y, this.w, this.h);
+        var ix = x + this.w / 2;
+        var iy = this.y + this.h / 2;
+        this._drawText(ctx, ix, iy);
 
         ctx.restore();
     }
 
+    _drawText(ctx, x, y) {
+        ctx.font = "9px Arial";
+        var text = "ROTATE YOUR PHONE";
+        ctx.translate(x, y);
+        ctx.rotate(this.rotation * (Math.PI / 180));
+        ctx.translate(-x, -y);
+        ctx.measureText(text).width / 2;
+        ctx.fillStyle = "white";
+        ctx.fillText(text, x - ctx.measureText(text).width / 2, y);
+    }
+
     _checkDirection() {
-        if (this.direction == "right" && this.rotation >= 90) {
+        if (this.direction == "right" && this.rotation >= 15) {
             this.direction = "left";
         }
         if (this.direction == "left" && this.rotation <= 0) {
             this.direction = "right";
         }
-        this.rotation += this.direction == "right" ? 1 : -1;
+        this.rotation += this.step * (this.direction == "right" ? 1 : -1);
     }
 
     drawBG() {

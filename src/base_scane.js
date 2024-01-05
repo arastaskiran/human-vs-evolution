@@ -111,6 +111,7 @@ export class BaseScene extends EvolutionScene {
     }
 
     _render(self) {
+       
         if (self._mobileCheck() && self._isPortrait()) {
             self.screen_protection.update();
             return;

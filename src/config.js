@@ -34,6 +34,9 @@ export class Config {
         this.inventory_box =
             "https://assets.humanvsevolution.com/cargo_game/inventory_box.png";
         this.box = "https://assets.humanvsevolution.com/cargo_game/box.png";
+        this.enter_selection_sound="https://assets.humanvsevolution.com/cargo_game/enterselection.wav";
+        this.minimaze_sound="https://assets.humanvsevolution.com/cargo_game/minimazesnd.wav";
+        this.menu_item_change_sound="https://assets.humanvsevolution.com/cargo_game/menuitemchange.wav";
     }
 
     mapConfig(data) {

@@ -31,7 +31,7 @@ export class ProductSelector extends BaseView {
     __loadMusic() {
         this.hover_sound = this.__insertSoundObject(this.config.mouse_hover_sound);
         this.leave_sound = this.__insertSoundObject(this.config.mouse_leave_sound);
-        this.click_sound = this.__insertSoundObject(this.config.mouse_click_sound);
+        this.click_sound = this.__insertSoundObject(this.config.menu_item_change_sound);
     }
 
     paddingLeft(padd) {
