@@ -5,8 +5,94 @@ export class Config {
         this.height = "100%";
         this.init = false;
         this.fps = 24;
-        this.orient_phone="https://assets.humanvsevolution.com/cargo_game/rotate_device.jpg";
-        this.product_list=[];
+        this.orient_phone =
+            "https://assets.humanvsevolution.com/cargo_game/rotate_device.jpg";
+        this.product_list = [
+            {
+                name: "Refrigerator A",
+                space: 0.751,
+                price: 999.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/refrige.jpeg",
+            },
+            {
+                name: "Cell phone",
+                space: 0.00000899,
+                price: 2199.12,
+                image: "https://assets.humanvsevolution.com/cargo_game/phone.png",
+            },
+            {
+                name: "TV 55",
+                space: 0.4,
+                price: 4346.99,
+                image: "https://assets.humanvsevolution.com/cargo_game/tv.png",
+            },
+            {
+                name: "TV 50",
+                space: 0.29,
+                price: 3999.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/tv.png",
+            },
+            {
+                name: "TV 42",
+                space: 0.2,
+                price: 2999.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/tv.png",
+            },
+            {
+                name: "Notebook A",
+                space: 0.0035,
+                price: 2499.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/notebook.png",
+            },
+            {
+                name: "Ventilator",
+                space: 0.496,
+                price: 199.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/ventilator.gif",
+            },
+            {
+                name: "Microwave A",
+                space: 0.0424,
+                price: 308.66,
+                image: "https://assets.humanvsevolution.com/cargo_game/microwave.webp",
+            },
+            {
+                name: "Microwave B",
+                space: 0.0544,
+                price: 429.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/microwave.webp",
+            },
+            {
+                name: "Microwave C",
+                space: 0.0319,
+                price: 299.29,
+                image: "https://assets.humanvsevolution.com/cargo_game/microwave.webp",
+            },
+            {
+                name: "Refrigerator B",
+                space: 0.635,
+                price: 849.0,
+                image: "https://assets.humanvsevolution.com/cargo_game/refrige.jpeg",
+            },
+            {
+                name: "Refrigerator C",
+                space: 0.87,
+                price: 1199.89,
+                image: "https://assets.humanvsevolution.com/cargo_game/refrige.jpeg",
+            },
+            {
+                name: "Notebook B",
+                space: 0.498,
+                price: 1999.9,
+                image: "https://assets.humanvsevolution.com/cargo_game/notebook.png",
+            },
+            {
+                name: "Notebook C",
+                space: 0.527,
+                price: 3999.0,
+                image: "https://assets.humanvsevolution.com/cargo_game/notebook.png",
+            },
+        ];
         this.container_image =
             "https://assets.humanvsevolution.com/cargo_game/container.webp";
         this.city_sound =
@@ -34,9 +120,12 @@ export class Config {
         this.inventory_box =
             "https://assets.humanvsevolution.com/cargo_game/inventory_box.png";
         this.box = "https://assets.humanvsevolution.com/cargo_game/box.png";
-        this.enter_selection_sound="https://assets.humanvsevolution.com/cargo_game/enterselection.wav";
-        this.minimaze_sound="https://assets.humanvsevolution.com/cargo_game/minimazesnd.wav";
-        this.menu_item_change_sound="https://assets.humanvsevolution.com/cargo_game/menuitemchange.wav";
+        this.enter_selection_sound =
+            "https://assets.humanvsevolution.com/cargo_game/enterselection.wav";
+        this.minimaze_sound =
+            "https://assets.humanvsevolution.com/cargo_game/minimazesnd.wav";
+        this.menu_item_change_sound =
+            "https://assets.humanvsevolution.com/cargo_game/menuitemchange.wav";
     }
 
     mapConfig(data) {
