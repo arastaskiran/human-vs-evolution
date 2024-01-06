@@ -6,7 +6,7 @@ import { ProductSelector } from "../models/product_selector";
 
 export class InventoryScreen extends BaseView {
     constructor(screen) {
-        super("home", screen);
+        super("inventory", screen);
         this.base_image = new Image();
         this.user_picture = new CrtImage(
             screen,
@@ -30,7 +30,18 @@ export class InventoryScreen extends BaseView {
 
         this.play_button.visible();
         this.hb = new HeartBeat(screen, 65, 18, 74, 20, "#ddfac0");
-        this.product_selector = new ProductSelector(screen,this.screen.product_list, 212, 7, 77, 115);
+        this.product_selector = new ProductSelector(
+            this,
+            this._getAllProducts(),
+            212,
+            7,
+            77,
+            115
+        );
+    }
+
+    _getAllProducts() {
+        return this.screen.product_list;
     }
 
     _init() {
@@ -60,7 +71,7 @@ export class InventoryScreen extends BaseView {
     }
 
     drawBG() {
-        var ctx = this.getContext();       
+        var ctx = this.getContext();
         ctx.save();
         this.base_image.width = this.screenWidth();
         this.base_image.height = this.screenHeight();

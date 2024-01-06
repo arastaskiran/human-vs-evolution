@@ -67,6 +67,8 @@ export class Inventory extends BaseView {
     select() {
         if (this.is_selected) return;
         this.is_selected = true;
+        this.selector.click_sound.currentTime = 0;
+        this.selector.click_sound.play();
     }
 
     _inBounds(mouseX, mouseY) {
@@ -102,8 +104,7 @@ export class Inventory extends BaseView {
     checkClick(e) {
 
         if (this._inBounds(e.clientX, e.clientY)) {
-            this.selector.click_sound.currentTime = 0;
-            this.selector.click_sound.play();
+           
             this.onClick();
             return true;
         }
