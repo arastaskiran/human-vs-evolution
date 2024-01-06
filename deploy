@@ -1,3 +1,0 @@
-git add . && git commit -m "deploy" && git push origin main
-git remote set-url origin git@gitlab.com:human-vs-evolution/human-vs-evolution.git && git fetch && git checkout aras && git push origin aras
-git remote set-url origin https://github.com/arastaskiran/human-vs-evolution.git && git fetch && git checkout main && git pull origin main
