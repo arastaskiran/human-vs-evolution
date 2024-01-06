@@ -11,7 +11,7 @@ export class OrientationChange extends BaseView {
         this.x = 60;
         this.y = 20;
         this.w = 200;
-        this.h = 80;
+        this.h = 100;
     }
 
     _init() {
