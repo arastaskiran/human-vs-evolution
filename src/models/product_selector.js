@@ -24,14 +24,20 @@ export class ProductSelector extends BaseView {
         this.click_sound = null;
         this.leave_sound = null;
         this._loadEvents();
-        this.__loadProducts(items)
+        this.__loadProducts(items);
         this.__loadMusic();
     }
 
     __loadMusic() {
-        this.hover_sound = this.__insertSoundObject(this.config.mouse_hover_sound);
-        this.leave_sound = this.__insertSoundObject(this.config.mouse_leave_sound);
-        this.click_sound = this.__insertSoundObject(this.config.menu_item_change_sound);
+        this.hover_sound = this.__insertSoundObject(
+            this.config.mouse_hover_sound
+        );
+        this.leave_sound = this.__insertSoundObject(
+            this.config.mouse_leave_sound
+        );
+        this.click_sound = this.__insertSoundObject(
+            this.config.menu_item_change_sound
+        );
     }
 
     paddingLeft(padd) {
@@ -67,6 +73,13 @@ export class ProductSelector extends BaseView {
             },
             false
         );
+        document.addEventListener(
+            "keyup",
+            function (e) {
+                self.__checkKeyUp(e);
+            },
+            true
+        );
     }
 
     onLoad() {
@@ -95,11 +108,10 @@ export class ProductSelector extends BaseView {
     blur() {
         if (!this.is_focus) return;
         this.is_focus = false;
-        this.inventories.forEach(r => {
+        this.inventories.forEach((r) => {
             r.blur();
-        })
+        });
     }
-
 
     _checkFocus(e) {
         if (this._inBounds(e.clientX, e.clientY)) {
@@ -114,13 +126,19 @@ export class ProductSelector extends BaseView {
         this._checkFocus(e);
         if (!this.is_focus) return;
 
-        this._getFreeProducts().forEach(r => {
+        this._getFreeProducts().forEach((r) => {
             if (r.checkClick(e)) {
-                (r.is_selected) ? r.blur() : r.select();
-            }
-            else r.blur();
+                r.is_selected ? r.blur() : r.select();
+            } else r.blur();
         });
+    }
 
+    __checkKeyUp(e) {
+        if (!this.status || this.is_disable || !this.is_focus) return;
+        var selected = this._getSelectedInventory();
+        if (selected == null) return;
+        var products=this._getFreeProducts();
+        console.log("HEY");
     }
 
     __checkMouseOver(e) {
@@ -137,7 +155,7 @@ export class ProductSelector extends BaseView {
         });
         this.selected_items = this.selected_items.filter((r) => {
             if (r.id != inventory.id) return r;
-        })
+        });
     }
 
     _drawItems() {
@@ -146,12 +164,16 @@ export class ProductSelector extends BaseView {
         var free = this._getFreeProducts();
         for (var i = 0; i < free.length; i++) {
             var p = free[i];
-            if ((i) % 2 == 0 && i > 0) {
+            if (i % 2 == 0 && i > 0) {
                 row++;
                 col = 0;
             }
-            var x = this.padding_left + this.x + (col * (p.width + this.padding_left));
-            var y = this.padding_top + this.y + (row * (p.height + this.padding_top));
+            var x =
+                this.padding_left +
+                this.x +
+                col * (p.width + this.padding_left);
+            var y =
+                this.padding_top + this.y + row * (p.height + this.padding_top);
             p.setCoordinate(x, y);
             p.update();
             col++;
@@ -159,7 +181,6 @@ export class ProductSelector extends BaseView {
     }
 
     _inBounds(mouseX, mouseY) {
-
         var rateX = this.screen.canvas.offsetWidth / this.screen.canvas.width;
         var rateY = this.screen.canvas.offsetHeight / this.screen.canvas.height;
         var offsetX = this.screen.canvas.offsetLeft;
@@ -170,7 +191,6 @@ export class ProductSelector extends BaseView {
         var w = rateX * this.w + offsetX / 2;
         var h = rateY * this.h + offsetY / 2;
 
-
         return !(mouseX < x || mouseX > x + w || mouseY < y || mouseY > y + h);
     }
 
@@ -179,5 +199,9 @@ export class ProductSelector extends BaseView {
         return this.inventories.filter((r) => {
             if (!self.selected_item_id_list.includes(r.id)) return r;
         });
+    }
+
+    _getSelectedInventory() {
+        return this.inventories.find((r) => r.is_selected === true);
     }
 }

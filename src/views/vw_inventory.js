@@ -50,6 +50,7 @@ export class InventoryScreen extends BaseView {
     }
 
     update() {
+        this.clearScreen();
         this.drawBG();
         this.drawHB();
         this.drawUser();
@@ -59,7 +60,7 @@ export class InventoryScreen extends BaseView {
     }
 
     drawBG() {
-        var ctx = this.getContext();
+        var ctx = this.getContext();       
         ctx.save();
         this.base_image.width = this.screenWidth();
         this.base_image.height = this.screenHeight();

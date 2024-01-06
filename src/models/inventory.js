@@ -29,8 +29,7 @@ export class Inventory extends BaseView {
 
     update() {
 
-        var ctx = this.getContext();
-        this._drawSelected(ctx);
+        var ctx = this.getContext();       
         ctx.save();
         this.getContext().drawImage(
             this.product.image,
@@ -39,6 +38,7 @@ export class Inventory extends BaseView {
             this.width,
             this.height
         );
+        this._drawSelected(ctx);
         ctx.restore();
       
 

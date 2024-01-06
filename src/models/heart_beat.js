@@ -13,7 +13,7 @@ export class HeartBeat extends BaseView {
         width,
         height,
         point_color = "#ddfac0",
-        shadow_color = "rgba(53, 87, 27, 0.1)",
+        shadow_color = "rgba(53, 87, 27, 0.5)",
         grid_color = ""
     ) {
         super("heart_beat", screen);
@@ -40,7 +40,7 @@ export class HeartBeat extends BaseView {
             { y: -10 / 3, x: 2 },
             { y: 10 / 3, x: 2 },
             { y: -4, x: 3 },
-            { y: 29 / 3, x: 5 },
+            { y: 25 / 3, x: 5 },
             { y: -25 / 3, x: 4 },
             { y: 14 / 3, x: 3 },
             { y: 5 / 3, x: 2 },

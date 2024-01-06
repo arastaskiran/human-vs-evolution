@@ -25,12 +25,10 @@ export class OrientationChange extends BaseView {
     update() {
         this._checkDirection();
 
-        var ctx = this.getContext();
-        ctx.clearRect(0, 0, this.screenWidth(), this.screenHeight());
+        var ctx = this.clearScreen();
         ctx.save();
 
-        var x =
-            this.screenWidth() / 2 - this.w / 2;
+        var x = this.screenWidth() / 2 - this.w / 2;
         ctx.drawImage(this.phone_image, x, this.y, this.w, this.h);
         var ix = x + this.w / 2;
         var iy = this.y + this.h / 2;

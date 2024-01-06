@@ -19,7 +19,7 @@ export class HomeScreen extends BaseView {
         this._init();
 
         this.play_button.visible();
-        this.hb = new HeartBeat(screen, 50,50,70, 30, "red");
+        this.hb = new HeartBeat(screen, 50, 50, 70, 30, "red");
     }
 
     _init() {
@@ -31,8 +31,9 @@ export class HomeScreen extends BaseView {
     }
 
     update() {
+        this.clearScreen();
         this.getContext().save();
-        this.drawBG();       
+        this.drawBG();
         this.getContext().restore();
         this.play_button.update();
         this.hb.update();

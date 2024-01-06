@@ -24,7 +24,7 @@ export class BaseScene extends EvolutionScene {
         this.city_sound = null;
         this.first_click = false;
         this.product_list = [];
-        this.user_selected = [];       
+        this.user_selected = [];
         this._createScene();
         this._loadAudios();
         this._initEvents();
@@ -111,7 +111,7 @@ export class BaseScene extends EvolutionScene {
     }
 
     _render(self) {
-       
+        
         if (self._mobileCheck() && self._isPortrait()) {
             self.screen_protection.update();
             return;

@@ -3,7 +3,7 @@ export class BaseView extends EvolutionScene {
     constructor(name, screen) {
         super();
         this.name = name;
-        this.screen = screen;       
+        this.screen = screen;
         this.config = screen.config;
         this.status = false;
         this.asset_status = [];
@@ -17,13 +17,18 @@ export class BaseView extends EvolutionScene {
     }
 
     screenWidth() {
-        //return 5;       
+        //return 5;
         return this.screen.canvas.width;
     }
 
     screenHeight() {
-       
         return this.screen.canvas.height;
+    }
+
+    clearScreen() {
+        var ctx = this.getContext();
+        ctx.clearRect(0, 0, this.screenWidth(), this.screenHeight());
+        return ctx;
     }
 
     open() {
@@ -38,9 +43,7 @@ export class BaseView extends EvolutionScene {
         this.onClose();
     }
 
-    dispose(){
-        
-    }
+    dispose() {}
 
     assetLoaded(name) {
         if (this.asset_status.includes(name)) return;
