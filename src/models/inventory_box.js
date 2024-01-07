@@ -20,6 +20,9 @@ export class InventoryBox extends ProductSelector {
     _pressTab() {}
 
     _pressDelete() {}
+    _buttonClick() {
+        this.equip();
+    }
 
     equip() {
         if (this.selected_item == null) return;

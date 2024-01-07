@@ -17,6 +17,10 @@ export class EquipBox extends ProductSelector {
 
     _pressTab() {}
 
+    _buttonClick() {
+        this._pressDelete();
+    }
+
     _pressDelete() {
         if (this.selected_item == null) return;
         this.onIgnore(this.getSelected());

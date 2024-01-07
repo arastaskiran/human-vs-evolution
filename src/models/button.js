@@ -21,20 +21,21 @@ export class Button extends BaseView {
         this.disabled = false;
         this.visibility = false;
         this.hover = false;
+        
 
         this.__loadMusic();
-        var bu = this;
+        var self = this;
         this.screen.canvas.addEventListener(
-            "click",
+            "mousedown",
             function (e) {
-                bu.__checkClick(e);
+                self.__checkClick(e);
             },
             false
         );
         this.screen.canvas.addEventListener(
             "mousemove",
             function (e) {
-                bu.__checkMouseOver(e);
+                self.__checkMouseOver(e);
             },
             false
         );
@@ -152,9 +153,15 @@ export class Button extends BaseView {
     }
 
     __loadMusic() {
-        this.hover_sound = this.__insertSoundObject(this.config.mouse_hover_sound);
-        this.leave_sound = this.__insertSoundObject(this.config.mouse_leave_sound);
-        this.click_sound = this.__insertSoundObject(this.config.mouse_click_sound);
+        this.hover_sound = this.__insertSoundObject(
+            this.config.mouse_hover_sound
+        );
+        this.leave_sound = this.__insertSoundObject(
+            this.config.mouse_leave_sound
+        );
+        this.click_sound = this.__insertSoundObject(
+            this.config.mouse_click_sound
+        );
     }
 
     __pauseAll() {

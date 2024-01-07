@@ -33,7 +33,7 @@ export class BaseView extends EvolutionScene {
 
     open() {
         if (this.status) return;
-        this.status = true;
+        this.status = true;      
         this.onLoad();
     }
 

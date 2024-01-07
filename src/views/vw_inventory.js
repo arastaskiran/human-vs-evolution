@@ -20,17 +20,17 @@ export class InventoryScreen extends BaseView {
         );
         this.play_button = new Button(
             this.screen,
-            "Test",
+            "START",
             "#22b324",
             "#f7eeed",
-            80,
-            50,
-            50,
-            10
+            205,
+            136,
+            92,
+            12
         );
         this._init();
 
-        this.play_button.visible();
+        this.play_button.hide();
         this.hb = new HeartBeat(screen, 65, 18, 74, 20, "#ddfac0");
         this.product_selector = new InventoryBox(
             this,
@@ -39,8 +39,12 @@ export class InventoryScreen extends BaseView {
             7,
             77,
             115
+        ).useButton("EQUIP", "#060694", "#f5b811");
+        this.equip_box = new EquipBox(this, 5, 50, 195, 73).useButton(
+            "IGNORE",
+            "#E53935",
+            "#FFFFFF"
         );
-        this.equip_box = new EquipBox(this, 5, 50, 195, 73);
         this.inventory_viewer = new InventoryViewer(screen, 162, 13, 38, 28);
         this._loadEvents();
     }
@@ -69,11 +73,13 @@ export class InventoryScreen extends BaseView {
     onLoad() {
         this.product_selector.open();
         this.equip_box.open();
+        this.play_button.visible();
     }
 
     onClose() {
         this.product_selector.close();
         this.equip_box.close();
+        this.play_button.hide();
     }
 
     update() {
@@ -82,10 +88,10 @@ export class InventoryScreen extends BaseView {
         this.drawHB();
         this.drawUser();
 
-        //this.play_button.update();
         this.product_selector.update();
         this.equip_box.update();
         this.drawSelected();
+        this.drawStartButton();
     }
 
     drawBG() {
@@ -137,12 +143,12 @@ export class InventoryScreen extends BaseView {
     }
 
     drawSelected() {
-        //this.drawTestRect(6, 129, 125, 17,"red") desc box
+        //this.drawTestRect(205, 136, 92, 12, "red"); // Start Game
+        //this.drawTestRect(213, 110, 76, 11, "red"); //Equip
         var focused = this.getFocused();
         if (focused == null) return;
         var selected = focused.getSelected();
         this.inventory_viewer.setImage(selected).update();
-        
     }
 
     getFocused() {
@@ -150,5 +156,15 @@ export class InventoryScreen extends BaseView {
             return this.product_selector;
         if (this.equip_box.getSelected() != null) return this.equip_box;
         return null;
+    }
+
+    drawStartButton() {
+        if (this.equip_box.getInventoryLength() == 0) {
+            this.play_button.hide();
+            this.play_button.update();
+            return;
+        }
+        this.play_button.visible();
+        this.play_button.update();
     }
 }

@@ -1,6 +1,7 @@
 import { Scene } from "../scene";
 import { BaseView } from "../views/base_view";
 import { Inventory } from "./inventory";
+import { Button } from "./button";
 
 export class ProductSelector extends BaseView {
     /**
@@ -28,9 +29,29 @@ export class ProductSelector extends BaseView {
         this.selected_item = null;
         this.selected_item_index = -1;
         this.is_inverted_list = false;
+        this.button = null;
         this._loadEvents();
         this.__loadProducts(items);
         this.__loadMusic();
+    }
+
+    useButton(text, background, text_color) {
+        var w = 76;
+        var h = 11;
+        var x = this.x + (this.width / 2 - w / 2);
+        var y = this.y + this.height - h - 1;
+        this.button = new Button(
+            this.screen,
+            text,
+            background,
+            text_color,
+            x,
+            y,
+            w,
+            h
+        );
+
+        return this;
     }
 
     __loadMusic() {
@@ -119,7 +140,7 @@ export class ProductSelector extends BaseView {
     _loadEvents() {
         var self = this;
         this.screen.canvas.addEventListener(
-            "click",
+            "mouseup",
             function (e) {
                 self.__checkClick(e);
             },
@@ -144,10 +165,16 @@ export class ProductSelector extends BaseView {
     onLoad() {
         this.enable();
         this.blur();
+        if (this.button != null) {
+            this.button.enable();
+        }
     }
 
     onClose() {
         this.blur();
+        if (this.button != null) {
+            this.button.disable();
+        }
     }
 
     disable() {
@@ -188,9 +215,17 @@ export class ProductSelector extends BaseView {
         return false;
     }
 
+    _buttonClick() {}
+
     __checkClick(e) {
         if (!this.status || this.is_disable || !this._isViewOnTheStage())
             return;
+        if (this.button != null) {
+            if (this.button.inBounds(e.clientX, e.clientY)) {
+                this._buttonClick();
+                return;
+            }
+        }
         var focus_stat = this._checkFocus(e);
         if (!this.is_focus) return;
         var self = this;
@@ -294,6 +329,14 @@ export class ProductSelector extends BaseView {
 
     update() {
         this._drawItems();
+        this._drawButton();
+    }
+
+    _drawButton() {
+        if (this.button == null) return;
+        this.selected_item == null ? this.button.hide() : this.button.visible();
+
+        this.button.update();
     }
 
     remove(inventory) {
