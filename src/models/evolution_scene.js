@@ -5,6 +5,12 @@ export class EvolutionScene {
         sound.src = src;
         sound.setAttribute("preload", "auto");
         sound.setAttribute("controls", "none");
+        sound.setAttribute(
+            "id",
+            Math.random()
+                .toString(36)
+                .substring(2, 16)
+        );
         sound.style.display = "none";
         sound.autoplay = false;
         if (auto_play) {

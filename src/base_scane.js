@@ -45,7 +45,10 @@ export class BaseScene extends EvolutionScene {
     }
 
     _loadAudios() {
-        this.city_sound = this.__insertSoundObject(this.config.city_sound);
+        this.city_sound = this.__insertSoundObject(
+            this.config.city_sound,
+            true
+        );
     }
 
     _createScene() {
@@ -111,7 +114,6 @@ export class BaseScene extends EvolutionScene {
     }
 
     _render(self) {
-        
         if (self._mobileCheck() && self._isPortrait()) {
             self.screen_protection.update();
             return;

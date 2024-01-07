@@ -9,6 +9,9 @@ export class EquipBox extends ProductSelector {
     constructor(view, x, y, width, height) {
         super("equip_box", view, [], x, y, width, height);
         this.rowLimit(5);
+        this.ignore_sound = this.__insertSoundObject(
+            this.screen.config.minimaze_sound
+        );
     }
 
     onIgnore(inventory) {}
@@ -23,6 +26,8 @@ export class EquipBox extends ProductSelector {
 
     _pressDelete() {
         if (this.selected_item == null) return;
+        this.ignore_sound.currentTime = 0;
+        this.ignore_sound.play();
         this.onIgnore(this.getSelected());
         this.removeItem(this.getSelected());
         this.selectIndex(this.selected_item_index);

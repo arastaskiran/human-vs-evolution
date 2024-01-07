@@ -21,7 +21,7 @@ export class Button extends BaseView {
         this.disabled = false;
         this.visibility = false;
         this.hover = false;
-        
+        this.use_click_sound = true;
 
         this.__loadMusic();
         var self = this;
@@ -39,6 +39,11 @@ export class Button extends BaseView {
             },
             false
         );
+    }
+
+    useClickSound(status) {
+        this.use_click_sound = status;
+        return this;
     }
 
     visible() {
@@ -113,8 +118,11 @@ export class Button extends BaseView {
         if (!this.visibility || this.disabled) return;
 
         if (this.inBounds(e.clientX, e.clientY)) {
-            this.click_sound.currentTime = 0;
-            this.click_sound.play();
+            if (this.use_click_sound) {
+                this.click_sound.currentTime = 0;
+                this.click_sound.play();
+            }
+
             this.onClick();
         }
     }

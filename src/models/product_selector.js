@@ -35,7 +35,7 @@ export class ProductSelector extends BaseView {
         this.__loadMusic();
     }
 
-    useButton(text, background, text_color) {
+    useButton(text, background, text_color, click_sound = false) {
         var w = 76;
         var h = 11;
         var x = this.x + (this.width / 2 - w / 2);
@@ -49,7 +49,7 @@ export class ProductSelector extends BaseView {
             y,
             w,
             h
-        );
+        ).useClickSound(click_sound);
 
         return this;
     }
