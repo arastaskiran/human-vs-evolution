@@ -23,8 +23,8 @@ export class InventoryBox extends ProductSelector {
 
     equip() {
         if (this.selected_item == null) return;
-        this.removeItem(this.getSelected());
         this.onEquip(this.getSelected());
+        this.removeItem(this.getSelected());
         this.selectIndex(this.selected_item_index);
     }
 }

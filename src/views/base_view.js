@@ -54,11 +54,15 @@ export class BaseView extends EvolutionScene {
         return this.asset_status.includes(name);
     }
 
-    drawTestRect(x,y,w,h){
-        var ctx=this.getContext();
+    drawTestRect(x, y, w, h, color = "red") {
+        var ctx = this.getContext();
         ctx.save();
-        ctx.fillStyle = "red";
-        ctx.fillRect(x,y,w,h);
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
         ctx.restore();
+    }
+
+    isCurrentScene() {
+        return this.screen.current_screen == this.name;
     }
 }

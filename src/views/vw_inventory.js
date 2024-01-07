@@ -4,6 +4,7 @@ import { HeartBeat } from "../models/heart_beat";
 import { CrtImage } from "../models/crt_image";
 import { InventoryBox } from "../models/inventory_box";
 import { EquipBox } from "../models/equip_box";
+import { InventoryViewer } from "../models/inventory_viewer";
 
 export class InventoryScreen extends BaseView {
     constructor(screen) {
@@ -40,6 +41,7 @@ export class InventoryScreen extends BaseView {
             115
         );
         this.equip_box = new EquipBox(this, 5, 50, 195, 73);
+        this.inventory_viewer = new InventoryViewer(screen, 162, 13, 38, 28);
         this._loadEvents();
     }
 
@@ -83,8 +85,7 @@ export class InventoryScreen extends BaseView {
         //this.play_button.update();
         this.product_selector.update();
         this.equip_box.update();
-
-        // this.drawTestRect(5, 50, 195, 73);
+        this.drawSelected();
     }
 
     drawBG() {
@@ -133,5 +134,21 @@ export class InventoryScreen extends BaseView {
             new Date().getSeconds() % 5 == 0 ? "#bcedbb" : "#07f702";
         ctx.fillText(text, x, y);
         ctx.restore();
+    }
+
+    drawSelected() {
+        //this.drawTestRect(6, 129, 125, 17,"red") desc box
+        var focused = this.getFocused();
+        if (focused == null) return;
+        var selected = focused.getSelected();
+        this.inventory_viewer.setImage(selected).update();
+        
+    }
+
+    getFocused() {
+        if (this.product_selector.getSelected() != null)
+            return this.product_selector;
+        if (this.equip_box.getSelected() != null) return this.equip_box;
+        return null;
     }
 }

@@ -45,6 +45,10 @@ export class ProductSelector extends BaseView {
         );
     }
 
+    isFocused() {
+        return this.is_focus;
+    }
+
     paddingLeft(padd) {
         this.padding_left = padd;
         return this;
@@ -88,17 +92,19 @@ export class ProductSelector extends BaseView {
         this._transferInventory(inventory);
     }
 
-    removeItem(inventory) {        
+    removeItem(inventory) {
         if (inventory == null) return;
         if (this.is_inverted_list) {
             if (this.selected_item_id_list.includes(inventory.id)) return;
             this.selected_item_id_list.push(inventory.id);
             this.selected_items.push(inventory);
+            if (this.getInventoryLength() == 0) this.__ignoreSelected();
             return;
         }
         this.inventories = this.inventories.filter((r) => {
             if (r.id != inventory.id) return r;
         });
+        if (this.getInventoryLength() == 0) this.__ignoreSelected();
     }
 
     _transferInventory(inventory) {
@@ -170,6 +176,8 @@ export class ProductSelector extends BaseView {
         this.inventories.forEach((r) => {
             self.__leaveProduct(r);
         });
+        this.selected_item = null;
+        this.selected_item_index = -1;
     }
 
     _checkFocus(e) {
@@ -197,6 +205,10 @@ export class ProductSelector extends BaseView {
     }
 
     __selectProduct(r) {
+        if (r == null) {
+            console.log("Unexpected");
+            return;
+        }
         if (this.selected_item != null && r != null) {
             if (this.selected_item.id != r.id) {
                 this.__ignoreSelected();
@@ -355,8 +367,15 @@ export class ProductSelector extends BaseView {
 
     selectIndex(index) {
         var products = this._getFreeProducts();
-        if (products.length < 1 || index >= products.length || index < 0)
+        if (products.length < 1) {
+            this.__ignoreSelected();
             return;
+        }
+        if (index >= products.length) {
+            this.selectIndex(products.length - 1);
+            return;
+        }
+        if (index < 0) return;
 
         this.__selectProduct(products[index]);
     }
