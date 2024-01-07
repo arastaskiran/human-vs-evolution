@@ -21,15 +21,26 @@ export class Inventory extends BaseView {
         this.product.image.height = height;
     }
 
+    clone() {
+        var inv = new Inventory(
+            this.selector,
+            this.product,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
+        inv.id = this.id;
+        return inv;
+    }
+
     setCoordinate(x, y) {
         this.x = x;
         this.y = y;
-
     }
 
     update() {
-
-        var ctx = this.getContext();       
+        var ctx = this.getContext();
         ctx.save();
         this.getContext().drawImage(
             this.product.image,
@@ -40,23 +51,22 @@ export class Inventory extends BaseView {
         );
         this._drawSelected(ctx);
         ctx.restore();
-      
-
     }
 
     _drawSelected(ctx) {
         if (!this.is_selected) return;
         ctx.save();
-        ctx.globalAlpha = 0.5
+        ctx.globalAlpha = 0.5;
         ctx.beginPath();
         ctx.lineWidth = 1;
-        ctx.strokeStyle = (new Date()).getMilliseconds()>500==0?'red':'#ebe834';
+        ctx.strokeStyle =
+            new Date().getMilliseconds() > 500 == 0 ? "red" : "#ebe834";
         ctx.fillStyle = "red";
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.stroke();
         ctx.fillStyle = "green";
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.globalAlpha = 1
+        ctx.globalAlpha = 1;
         ctx.restore();
     }
 
@@ -82,12 +92,10 @@ export class Inventory extends BaseView {
         var w = rateX * this.width + offsetX / 2;
         var h = rateY * this.height + offsetY / 2;
 
-
         return !(mouseX < x || mouseX > x + w || mouseY < y || mouseY > y + h);
     }
 
     checkMouseOver(e) {
-
         var state = this._inBounds(e.clientX, e.clientY);
         if (this.hover != state) {
             if (state) {
@@ -99,12 +107,10 @@ export class Inventory extends BaseView {
         }
     }
 
-    onClick() { }
+    onClick() {}
 
     checkClick(e) {
-
         if (this._inBounds(e.clientX, e.clientY)) {
-           
             this.onClick();
             return true;
         }

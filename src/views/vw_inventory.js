@@ -2,7 +2,8 @@ import { BaseView } from "./base_view";
 import { Button } from "../models/button";
 import { HeartBeat } from "../models/heart_beat";
 import { CrtImage } from "../models/crt_image";
-import { ProductSelector } from "../models/product_selector";
+import { InventoryBox } from "../models/inventory_box";
+import { EquipBox } from "../models/equip_box";
 
 export class InventoryScreen extends BaseView {
     constructor(screen) {
@@ -30,7 +31,7 @@ export class InventoryScreen extends BaseView {
 
         this.play_button.visible();
         this.hb = new HeartBeat(screen, 65, 18, 74, 20, "#ddfac0");
-        this.product_selector = new ProductSelector(
+        this.product_selector = new InventoryBox(
             this,
             this._getAllProducts(),
             212,
@@ -38,6 +39,17 @@ export class InventoryScreen extends BaseView {
             77,
             115
         );
+        this.equip_box = new EquipBox(this, 5, 50, 195, 73);
+        this._loadEvents();
+    }
+
+    _loadEvents() {
+        this.product_selector.onEquip = (inventory) => {
+            this.equip_box.addItem(inventory);
+        };
+        this.equip_box.onIgnore = (inventory) => {
+            this.product_selector.addItem(inventory);
+        };
     }
 
     _getAllProducts() {
@@ -54,10 +66,12 @@ export class InventoryScreen extends BaseView {
 
     onLoad() {
         this.product_selector.open();
+        this.equip_box.open();
     }
 
     onClose() {
         this.product_selector.close();
+        this.equip_box.close();
     }
 
     update() {
@@ -66,8 +80,11 @@ export class InventoryScreen extends BaseView {
         this.drawHB();
         this.drawUser();
 
-        this.play_button.update();
+        //this.play_button.update();
         this.product_selector.update();
+        this.equip_box.update();
+
+        // this.drawTestRect(5, 50, 195, 73);
     }
 
     drawBG() {

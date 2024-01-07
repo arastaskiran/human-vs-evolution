@@ -53,4 +53,12 @@ export class BaseView extends EvolutionScene {
     isAssetLoad(name) {
         return this.asset_status.includes(name);
     }
+
+    drawTestRect(x,y,w,h){
+        var ctx=this.getContext();
+        ctx.save();
+        ctx.fillStyle = "red";
+        ctx.fillRect(x,y,w,h);
+        ctx.restore();
+    }
 }

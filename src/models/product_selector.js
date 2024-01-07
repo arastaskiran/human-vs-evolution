@@ -7,8 +7,8 @@ export class ProductSelector extends BaseView {
      *
      * @param {Scene} scene
      */
-    constructor(view, items, x, y, width, height) {
-        super("product_selector", view.screen);
+    constructor(name, view, items, x, y, width, height) {
+        super(name, view.screen);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -20,12 +20,14 @@ export class ProductSelector extends BaseView {
         this.selected_items = [];
         this.padding_left = 5;
         this.padding_top = 1;
+        this.row_limit = 2;
         this.is_focus = false;
         this.hover_sound = null;
         this.click_sound = null;
         this.leave_sound = null;
         this.selected_item = null;
         this.selected_item_index = -1;
+        this.is_inverted_list = false;
         this._loadEvents();
         this.__loadProducts(items);
         this.__loadMusic();
@@ -53,11 +55,59 @@ export class ProductSelector extends BaseView {
         return this;
     }
 
+    rowLimit(limit) {
+        this.row_limit = limit;
+        return this;
+    }
+
+    setInverted(status = true) {
+        this.is_inverted_list = status;
+        return this;
+    }
+
     __loadProducts(items) {
         var self = this;
         items.forEach((r) => {
             self.inventories.push(new Inventory(self, r));
         });
+    }
+
+    addItem(inventory) {
+        if (inventory == null) return;
+        if (this.is_inverted_list) {
+            this.selected_items = this.selected_items.filter((r) => {
+                if (r.id != inventory.id) return r;
+            });
+            this.selected_item_id_list = this.selected_item_id_list.filter(
+                (r) => {
+                    if (r != inventory.id) return r;
+                }
+            );
+            return;
+        }
+        this._transferInventory(inventory);
+    }
+
+    removeItem(inventory) {        
+        if (inventory == null) return;
+        if (this.is_inverted_list) {
+            if (this.selected_item_id_list.includes(inventory.id)) return;
+            this.selected_item_id_list.push(inventory.id);
+            this.selected_items.push(inventory);
+            return;
+        }
+        this.inventories = this.inventories.filter((r) => {
+            if (r.id != inventory.id) return r;
+        });
+    }
+
+    _transferInventory(inventory) {
+        if (this.isInventoryExist(inventory)) return;
+        this.inventories.push(inventory.clone());
+    }
+
+    isInventoryExist(inventory) {
+        return this.inventories.find((r) => r.id === inventory.id) != null;
     }
 
     _loadEvents() {
@@ -105,12 +155,17 @@ export class ProductSelector extends BaseView {
     }
 
     focus() {
-        if (this.is_focus) return;
+        if (this.is_focus) return false;
         this.is_focus = true;
+        return true;
     }
     blur() {
         if (!this.is_focus) return;
         this.is_focus = false;
+        this.unselectAll();
+    }
+
+    unselectAll() {
         var self = this;
         this.inventories.forEach((r) => {
             self.__leaveProduct(r);
@@ -119,16 +174,16 @@ export class ProductSelector extends BaseView {
 
     _checkFocus(e) {
         if (this._inBounds(e.clientX, e.clientY)) {
-            this.focus();
-            return;
+            return this.focus();
         }
         this.blur();
+        return false;
     }
 
     __checkClick(e) {
         if (!this.status || this.is_disable || !this._isViewOnTheStage())
             return;
-        this._checkFocus(e);
+        var focus_stat = this._checkFocus(e);
         if (!this.is_focus) return;
         var self = this;
         this._getFreeProducts().forEach((r) => {
@@ -138,6 +193,7 @@ export class ProductSelector extends BaseView {
                     : self.__selectProduct(r);
             } else self.__leaveProduct(r);
         });
+        if (focus_stat && this.getSelected() == null) this.selectIndex(0);
     }
 
     __selectProduct(r) {
@@ -169,7 +225,15 @@ export class ProductSelector extends BaseView {
         this.selected_item_index = -1;
     }
 
-    reset() {}
+    reset() {
+        this.unselectAll();
+        if (this.is_inverted_list) {
+            this.selected_items = [];
+            this.selected_item_id_list = [];
+            return;
+        }
+        this.inventories = [];
+    }
 
     __checkKeyUp(e) {
         if (
@@ -209,7 +273,6 @@ export class ProductSelector extends BaseView {
                 this._pressDelete();
                 break;
         }
-        console.log("HEY");
     }
 
     __checkMouseOver(e) {
@@ -236,7 +299,7 @@ export class ProductSelector extends BaseView {
         var free = this._getFreeProducts();
         for (var i = 0; i < free.length; i++) {
             var p = free[i];
-            if (i % 2 == 0 && i > 0) {
+            if (i % this.row_limit == 0 && i > 0) {
                 row++;
                 col = 0;
             }
@@ -267,6 +330,7 @@ export class ProductSelector extends BaseView {
     }
 
     _getFreeProducts() {
+        if (!this.is_inverted_list) return this.inventories;
         var self = this;
         return this.inventories.filter((r) => {
             if (!self.selected_item_id_list.includes(r.id)) return r;
@@ -291,7 +355,7 @@ export class ProductSelector extends BaseView {
 
     selectIndex(index) {
         var products = this._getFreeProducts();
-        if (products.length < 0 || index >= products.length || index < 0)
+        if (products.length < 1 || index >= products.length || index < 0)
             return;
 
         this.__selectProduct(products[index]);
@@ -299,7 +363,7 @@ export class ProductSelector extends BaseView {
 
     _pressUp() {
         if (this.getSelectedIndex() < 0) return;
-        var curr = this.getSelectedIndex() - 2;
+        var curr = this.getSelectedIndex() - this.row_limit;
         var len = this.getInventoryLength();
 
         if (curr < 0) curr = len + curr;
@@ -326,7 +390,7 @@ export class ProductSelector extends BaseView {
 
     _pressDown() {
         if (this.getSelectedIndex() < 0) return;
-        var curr = this.getSelectedIndex() + 2;
+        var curr = this.getSelectedIndex() + this.row_limit;
         var len = this.getInventoryLength();
 
         if (curr >= len) curr = curr - len;
@@ -334,11 +398,11 @@ export class ProductSelector extends BaseView {
         this.selectIndex(curr);
     }
 
-    _pressESC() {}
-
-    _pressEnter() {
-        console.log(this.getSelectedIndex());
+    _pressESC() {
+        this.blur();
     }
+
+    _pressEnter() {}
 
     _pressTab() {}
 
