@@ -31,7 +31,7 @@ export class InventoryScreen extends BaseView {
         this._init();
 
         this.play_button.hide();
-        this.hb = new HeartBeat(screen, 65, 18, 74, 20, "#ddfac0");
+        this.hb = new HeartBeat(screen, 67, 18, 74, 20, "#ddfac0");
         this.product_selector = new InventoryBox(
             this,
             this._getAllProducts(),
@@ -46,16 +46,35 @@ export class InventoryScreen extends BaseView {
             "#FFFFFF"
         );
         this.inventory_viewer = new InventoryViewer(screen, 162, 13, 38, 28);
+        this.user_actions = [];
         this._loadEvents();
     }
 
     _loadEvents() {
+        var self = this;
         this.product_selector.onEquip = (inventory) => {
             this.equip_box.addItem(inventory);
+            this._addAction("equip", inventory);
         };
         this.equip_box.onIgnore = (inventory) => {
             this.product_selector.addItem(inventory);
+            this._addAction("ignore", inventory);
         };
+        document.addEventListener(
+            "keyup",
+            function (e) {
+                self.__checkKeyUp(e);
+            },
+            true
+        );
+    }
+
+    _addAction(action, inventory) {
+        this.user_actions.push({
+            action: action,
+            inventory: inventory.clone(),
+            date: new Date(),
+        });
     }
 
     _getAllProducts() {
@@ -74,6 +93,12 @@ export class InventoryScreen extends BaseView {
         this.product_selector.open();
         this.equip_box.open();
         this.play_button.visible();
+        this.hb.setFine();
+        this.product_selector.unselectAll();
+        this.product_selector.blur();
+        this.equip_box.unselectAll();
+        this.equip_box.blur();
+        this.screen.startUserSession();
     }
 
     onClose() {
@@ -92,6 +117,7 @@ export class InventoryScreen extends BaseView {
         this.equip_box.update();
         this.drawSelected();
         this.drawStartButton();
+        this._drawTimeRemain();
     }
 
     drawBG() {
@@ -127,34 +153,25 @@ export class InventoryScreen extends BaseView {
     }
     drawHB() {
         this.hb.update();
-        var ctx = this.getContext();
-        var text = "FINE";
-        var w = 36;
-        var h = 7;
-        var x = 106 + Math.round(w / 2) - ctx.measureText(text).width / 2;
-        var y = 6 + h / 2 + 3;
-
-        ctx.save();
-        ctx.font = "8px Arial";
-        ctx.fillStyle =
-            new Date().getSeconds() % 5 == 0 ? "#bcedbb" : "#07f702";
-        ctx.fillText(text, x, y);
-        ctx.restore();
     }
 
     drawSelected() {
-        //this.drawTestRect(205, 136, 92, 12, "red"); // Start Game
-        //this.drawTestRect(213, 110, 76, 11, "red"); //Equip
-        var focused = this.getFocused();
+        var focused = this.getFocusAndSelected();
         if (focused == null) return;
         var selected = focused.getSelected();
         this.inventory_viewer.setImage(selected).update();
     }
 
-    getFocused() {
+    getFocusAndSelected() {
         if (this.product_selector.getSelected() != null)
             return this.product_selector;
         if (this.equip_box.getSelected() != null) return this.equip_box;
+        return null;
+    }
+
+    getFocused() {
+        if (this.product_selector.is_focus) return this.product_selector;
+        if (this.equip_box.is_focus) return this.equip_box;
         return null;
     }
 
@@ -167,4 +184,93 @@ export class InventoryScreen extends BaseView {
         this.play_button.visible();
         this.play_button.update();
     }
+
+    __checkKeyUp(e) {
+        if (!this.isCurrentScene()) return;
+        e = e || window.event;
+        console.log(e.keyCode);
+        switch (e.keyCode) {
+            case 9:
+                this._pressTab();
+                break;
+            case 32:
+                this._pressSpace();
+                break;
+        }
+    }
+
+    _pressTab() {
+        var focused = this.getFocused();
+        if (focused == null) {
+            if (this._focusInventoryBox()) {
+                return;
+            }
+            this._focusEquipBox();
+            return;
+        }
+        console.log(focused);
+        focused.name == "equip_box"
+            ? this._focusInventoryBox()
+            : this._focusEquipBox();
+    }
+
+    _focusInventoryBox() {
+        this.equip_box.unselectAll();
+        this.equip_box.blur();
+        return this.product_selector.selectAndFocus();
+    }
+
+    _focusEquipBox() {
+        this.product_selector.unselectAll();
+        this.product_selector.blur();
+        return this.equip_box.selectAndFocus();
+    }
+
+    _drawTimeRemain() {
+        if (
+            this.screen.user_end_date == null ||
+            this.screen.user_start_date == null
+        )
+            return;
+        var duration = this.screen.user_end_date - this.screen.user_start_date;
+        var remain = this.screen.user_end_date - Math.floor(Date.now() / 1000);
+        var percent = remain < 0 ? -1 : (remain * 100) / duration;
+        if (percent < 0) {
+            //Danger
+            this.hb.setDead();
+        } else if (percent >= 0 && percent < 25) {
+            //Danger
+            this.hb.setDanger();
+        } else if (percent >= 25 && percent < 50) {
+            //Caution
+            this.hb.setCaution();
+        } else if (percent >= 50) {
+            this.hb.setFine();
+        }
+        var ctx = this.getContext();
+        ctx.save();
+        var text =
+            remain < 1
+                ? "00:00"
+                : `${String(Math.floor(remain / 60)).padStart(2, "0")}:${String(
+                      remain % 60
+                  ).padStart(2, "0")}`;
+
+        ctx.font = "8px Arial";
+
+        ctx.fillStyle = this.hb.getPointColor();
+
+        var text_size = ctx.measureText(text);
+        //console.log(text_size)
+        var y = 30 + text_size.fontBoundingBoxAscent;
+        var x = 115 + Math.round(26 / 2) - text_size.width / 2;
+
+        ctx.fillText(text, x, y);
+
+        ctx.restore();
+
+        //this.drawTestRect(115,30,26,8,"red")
+    }
+
+    _pressSpace() {}
 }

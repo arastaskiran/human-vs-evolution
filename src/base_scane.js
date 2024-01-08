@@ -29,6 +29,19 @@ export class BaseScene extends EvolutionScene {
         this._loadAudios();
         this._initEvents();
         this.screen_protection = new OrientationChange(this);
+        this.user_start_date = null;
+        this.user_end_date = null;
+        this.evolution_limit = -1;
+    }
+
+    startUserSession() {
+        this.user_start_date = Math.floor(Date.now() / 1000);
+        this.user_end_date =
+            this.user_start_date +
+            Math.floor(Math.random() * (180 - 60 + 1)) +
+            60;
+
+        this.evolution_limit = Math.random() * (4.79920899 - 0.5) + 0.5;
     }
 
     _initEvents() {

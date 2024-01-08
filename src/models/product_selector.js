@@ -460,6 +460,13 @@ export class ProductSelector extends BaseView {
         this.selectIndex(curr);
     }
 
+    selectAndFocus() {
+        if (this.getInventoryLength() == 0) return false;
+        this.focus();
+        this.selectIndex(0);
+        return true;
+    }
+
     _pressESC() {
         this.blur();
     }
