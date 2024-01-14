@@ -24,7 +24,8 @@ export class BaseScene extends EvolutionScene {
         this.city_sound = null;
         this.first_click = false;
         this.product_list = [];
-        this.user_selected = [];
+        this.user_selected = [];       
+        this.ai = null;
         this._createScene();
         this._loadAudios();
         this._initEvents();
@@ -41,7 +42,9 @@ export class BaseScene extends EvolutionScene {
             Math.floor(Math.random() * (180 - 60 + 1)) +
             60;
 
-        this.evolution_limit = Math.random() * (4.79920899 - 0.5) + 0.5;
+        this.evolution_limit = parseFloat(
+            (Math.random() * (4.79920899 - 0.5) + 0.5).toFixed(2)
+        );
     }
 
     _initEvents() {
@@ -122,6 +125,7 @@ export class BaseScene extends EvolutionScene {
         if (typeof this.screens[this.current_screen] !== "undefined") {
             this.screens[this.current_screen].close();
         }
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.screens[view_name].open();
         this.current_screen = view_name;
     }

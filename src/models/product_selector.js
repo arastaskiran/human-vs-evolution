@@ -476,4 +476,8 @@ export class ProductSelector extends BaseView {
     _pressTab() {}
 
     _pressDelete() {}
+
+    getItems() {
+        return this.selected_items;
+    }
 }

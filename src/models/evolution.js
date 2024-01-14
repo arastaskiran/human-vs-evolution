@@ -1,17 +1,26 @@
 import { Individual } from "./individual";
-
+import { Score } from "./score";
 export class Evolution {
-    constructor(population_size) {
+    constructor(screen, population_size, debug = false) {
+        this.screen = screen;
         this.population_size = population_size;
         this.population = [];
         this.generation = 0;
         this.best_solution = null;
         this.list_of_solutions = [];
+        this.generations = {};
+        this.score = null;
+        this.is_done = false;
+        this.debug = debug;
+        this.started_at = Math.floor(Date.now());
+        this.finished_at = null;
     }
 
     _initilizePopulation(spaces, prices, space_limit) {
         for (var i = 0; i < this.population_size; i++) {
-            this.population.push(new Individual(spaces, prices, space_limit));
+            this.population.push(
+                new Individual(this, spaces, prices, space_limit)
+            );
         }
         this.best_solution = this.population[0];
     }
@@ -51,6 +60,7 @@ export class Evolution {
     }
 
     _visualizeGeneration() {
+        if (!this.debug) return;
         console.log(this.getBest().toString());
     }
 
@@ -65,7 +75,16 @@ export class Evolution {
             this._createNewGeneration(mutation_probability);
         }
         this._visualizeBest();
-        return this.best_solution.chromosome;
+        this.finished_at = Math.floor(Date.now());
+        this.score = new Score(
+            this.screen.evolution_limit,
+            this.started_at,
+            this.finished_at,
+            this.best_solution.getProducts()
+        );
+        this.is_done = true;
+        console.log(this)
+        return this.best_solution;
     }
 
     _createNewGeneration(mutation_probability) {
@@ -107,6 +126,7 @@ export class Evolution {
     }
 
     _visualizeBest() {
+        if (!this.debug) return;
         console.log("***** BEST SOLUTION *********");
         console.log(this.best_solution.toString());
     }
@@ -114,4 +134,13 @@ export class Evolution {
     _sanitPopulationIndex(index) {
         return index < 0 ? this.population.length - 1 : index;
     }
+
+    register(individual) {
+        if (typeof this.generations[individual.generation] === "undefined") {
+            this.generations[individual.generation] = [];
+        }
+        this.generations[individual.generation].push(individual);
+    }
+
+    amIWin() {}
 }

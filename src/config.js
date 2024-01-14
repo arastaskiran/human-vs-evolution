@@ -4,6 +4,10 @@ export class Config {
         this.width = "100%";
         this.height = "100%";
         this.init = false;
+        this.population_size = 20;
+        this.mutation_probability = 0.01;
+        this.number_of_generations = 1000;
+
         this.fps = 24;
         this.orient_phone =
             "https://assets.humanvsevolution.com/cargo_game/rotate_device.jpg";
@@ -126,6 +130,8 @@ export class Config {
             "https://assets.humanvsevolution.com/cargo_game/minimazesnd.wav";
         this.menu_item_change_sound =
             "https://assets.humanvsevolution.com/cargo_game/menuitemchange.wav";
+        this.flawless_victory_sound =
+            "https://assets.humanvsevolution.com/cargo_game/flawless-victory.wav";
     }
 
     mapConfig(data) {

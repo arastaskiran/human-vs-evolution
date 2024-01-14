@@ -60,6 +60,9 @@ export class InventoryScreen extends BaseView {
             this.product_selector.addItem(inventory);
             this._addAction("ignore", inventory);
         };
+        this.play_button.onClick = () => {
+            self._startGame();
+        };
         document.addEventListener(
             "keyup",
             function (e) {
@@ -67,6 +70,11 @@ export class InventoryScreen extends BaseView {
             },
             true
         );
+    }
+
+    _startGame() {
+        this.equip_box.apply();
+        this.screen.setView("match");
     }
 
     _addAction(action, inventory) {
@@ -94,14 +102,18 @@ export class InventoryScreen extends BaseView {
         this.equip_box.open();
         this.play_button.visible();
         this.hb.setFine();
+        this.product_selector.enable();
         this.product_selector.unselectAll();
         this.product_selector.blur();
+        this.equip_box.enable();
         this.equip_box.unselectAll();
         this.equip_box.blur();
         this.screen.startUserSession();
     }
 
     onClose() {
+        this.product_selector.disable();
+        this.equip_box.disable();
         this.product_selector.close();
         this.equip_box.close();
         this.play_button.hide();
@@ -118,6 +130,7 @@ export class InventoryScreen extends BaseView {
         this.drawSelected();
         this.drawStartButton();
         this._drawTimeRemain();
+        this._drawLimit();
     }
 
     drawBG() {
@@ -176,7 +189,7 @@ export class InventoryScreen extends BaseView {
     }
 
     drawStartButton() {
-        if (this.equip_box.getInventoryLength() == 0) {
+        if (this.equip_box.getInventoryLength() == 0 && !this.hb.isDead()) {
             this.play_button.hide();
             this.play_button.update();
             return;
@@ -237,6 +250,11 @@ export class InventoryScreen extends BaseView {
         var percent = remain < 0 ? -1 : (remain * 100) / duration;
         if (percent < 0) {
             //Danger
+            if (this.getFocused() != null) {
+                this.getFocused().blur();
+            }
+            this.product_selector.disable();
+            this.equip_box.disable();
             this.hb.setDead();
         } else if (percent >= 0 && percent < 25) {
             //Danger
@@ -257,19 +275,27 @@ export class InventoryScreen extends BaseView {
                   ).padStart(2, "0")}`;
 
         ctx.font = "8px Arial";
-
         ctx.fillStyle = this.hb.getPointColor();
-
         var text_size = ctx.measureText(text);
-        //console.log(text_size)
         var y = 30 + text_size.fontBoundingBoxAscent;
         var x = 115 + Math.round(26 / 2) - text_size.width / 2;
 
         ctx.fillText(text, x, y);
-
         ctx.restore();
+    }
 
-        //this.drawTestRect(115,30,26,8,"red")
+    _drawLimit() {
+        //this.drawTestRect(110, 18, 31, 8, "red");
+        var ctx = this.getContext();
+        var text = "L: " + String(this.screen.evolution_limit);
+        ctx.font = "8px Arial";
+        ctx.fillStyle = "white";
+        var text_size = ctx.measureText(text);
+        var y = 18 + text_size.fontBoundingBoxAscent;
+        var x = 110 + Math.round(31 / 2) - text_size.width / 2;
+
+        ctx.fillText(text, x, y);
+        ctx.restore();
     }
 
     _pressSpace() {}

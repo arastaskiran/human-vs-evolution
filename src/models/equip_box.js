@@ -32,4 +32,12 @@ export class EquipBox extends ProductSelector {
         this.removeItem(this.getSelected());
         this.selectIndex(this.selected_item_index);
     }
+
+    apply() {
+        var self = this;
+        this.screen.user_selected = [];
+        this.getItems().forEach((r) => {
+            self.screen.user_selected.push(r.getProduct());
+        });
+    }
 }

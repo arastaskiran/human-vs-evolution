@@ -113,6 +113,10 @@ export class HeartBeat extends BaseView {
         this.shadow_color = "rgba(247, 89, 64, 0.5)";
     }
 
+    isDead() {
+        return this.condition_text == "DEAD";
+    }
+
     _drawConditionText(ctx) {
         ctx.font = "8px Arial";
         var text = this.condition_text;

@@ -3,6 +3,7 @@ import { Events } from "./events/app_events";
 import { HomeScreen } from "./views/vw_home";
 import { InventoryScreen } from "./views/vw_inventory";
 import { BaseScene } from "./base_scane";
+import { Match } from "./views/vw_match";
 
 export class Scene extends BaseScene {
     /**
@@ -15,9 +16,10 @@ export class Scene extends BaseScene {
 
         this.screens = {
             home: new HomeScreen(this),
-            inventory: new InventoryScreen(this)
+            inventory: new InventoryScreen(this),
+            match: new Match(this),
         };
-        this.setView("inventory");
+        this.setView("match");
         this.setFPS(config.fps);
         this._srartGame();
     }
