@@ -82,8 +82,7 @@ export class Evolution {
             this.finished_at,
             this.best_solution.getProducts()
         );
-        this.is_done = true;
-        console.log(this)
+        this.is_done = true;       
         return this.best_solution;
     }
 

@@ -99,6 +99,8 @@ export class Config {
         ];
         this.container_image =
             "https://assets.humanvsevolution.com/cargo_game/container.webp";
+        this.dna_image =
+            "https://assets.humanvsevolution.com/cargo_game/dna_image.jpg";
         this.city_sound =
             "https://assets.humanvsevolution.com/cargo_game/city_sound.wav";
         this.ambicent_crow_sound =

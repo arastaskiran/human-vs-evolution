@@ -4,6 +4,7 @@ import { Product } from "./models/product";
 import { Evolution } from "./models/evolution";
 import { EvolutionScene } from "./models/evolution_scene";
 import { OrientationChange } from "./views/vw_change_orient";
+import { Score } from "./models/score";
 
 export class BaseScene extends EvolutionScene {
     /**
@@ -24,7 +25,7 @@ export class BaseScene extends EvolutionScene {
         this.city_sound = null;
         this.first_click = false;
         this.product_list = [];
-        this.user_selected = [];       
+        this.user_selected = [];
         this.ai = null;
         this._createScene();
         this._loadAudios();
@@ -32,7 +33,9 @@ export class BaseScene extends EvolutionScene {
         this.screen_protection = new OrientationChange(this);
         this.user_start_date = null;
         this.user_end_date = null;
+        this.user_finish_date = null;
         this.evolution_limit = -1;
+        this.score = null;
     }
 
     startUserSession() {
@@ -44,6 +47,15 @@ export class BaseScene extends EvolutionScene {
 
         this.evolution_limit = parseFloat(
             (Math.random() * (4.79920899 - 0.5) + 0.5).toFixed(2)
+        );
+    }
+    endUserSession() {
+        this.user_finish_date = Math.floor(Date.now() / 1000);
+        this.score = new Score(
+            this.evolution_limit,
+            this.user_start_date * 1000,
+            this.user_finish_date * 1000,
+            this.user_selected
         );
     }
 
@@ -109,7 +121,7 @@ export class BaseScene extends EvolutionScene {
 
     setFPS(fps) {
         if (fps == 0) {
-            console.log("fps must greater then 0");
+            alert("fps must greater then 0");
             return;
         }
         this.update_rate = 1000 / fps;

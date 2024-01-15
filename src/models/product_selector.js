@@ -478,6 +478,6 @@ export class ProductSelector extends BaseView {
     _pressDelete() {}
 
     getItems() {
-        return this.selected_items;
+        return this._getFreeProducts();
     }
 }

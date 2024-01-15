@@ -74,6 +74,7 @@ export class InventoryScreen extends BaseView {
 
     _startGame() {
         this.equip_box.apply();
+        this.screen.endUserSession();
         this.screen.setView("match");
     }
 
@@ -200,8 +201,7 @@ export class InventoryScreen extends BaseView {
 
     __checkKeyUp(e) {
         if (!this.isCurrentScene()) return;
-        e = e || window.event;
-        console.log(e.keyCode);
+        e = e || window.event;       
         switch (e.keyCode) {
             case 9:
                 this._pressTab();
@@ -220,8 +220,7 @@ export class InventoryScreen extends BaseView {
             }
             this._focusEquipBox();
             return;
-        }
-        console.log(focused);
+        }       
         focused.name == "equip_box"
             ? this._focusInventoryBox()
             : this._focusEquipBox();

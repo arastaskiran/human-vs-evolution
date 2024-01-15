@@ -70,8 +70,7 @@ export class InventoryViewer extends BaseView {
         ctx.globalAlpha = 1;
         ctx.font = "5px Arial";
         var text = this.inventory.product.space + "m3";
-        var text_size = ctx.measureText(text);
-        //console.log(text_size)
+        var text_size = ctx.measureText(text);      
         var y =
             this.y + this.space_label_offset + text_size.fontBoundingBoxAscent;
         var x = this.x + Math.round(this.width / 2) - text_size.width / 2;
@@ -107,8 +106,7 @@ export class InventoryViewer extends BaseView {
         return ctx;
     }
 
-    _drawDescription(ctx) {
-        //(6, 129, 125, 17,"red")
+    _drawDescription(ctx) {       
         ctx.save();
         this._drawDescLine(ctx, "Porduct:", this.inventory.product.name, 0);
         this._drawDescLine(

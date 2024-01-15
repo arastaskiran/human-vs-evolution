@@ -19,7 +19,7 @@ export class Scene extends BaseScene {
             inventory: new InventoryScreen(this),
             match: new Match(this),
         };
-        this.setView("match");
+        this.setView("inventory");
         this.setFPS(config.fps);
         this._srartGame();
     }
