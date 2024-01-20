@@ -137,7 +137,7 @@ export class BaseScene extends EvolutionScene {
         if (typeof this.screens[this.current_screen] !== "undefined") {
             this.screens[this.current_screen].close();
         }
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);       
         this.screens[view_name].open();
         this.current_screen = view_name;
     }
@@ -147,6 +147,7 @@ export class BaseScene extends EvolutionScene {
             self.screen_protection.update();
             return;
         }
+        self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
         self._getCurrentScreen().update();
     }
 

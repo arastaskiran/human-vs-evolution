@@ -30,6 +30,10 @@ export class HomeScreen extends BaseView {
         };
     }
 
+    onLoad() {
+        this.screen.startUserSession();
+    }
+
     update() {
         this.clearScreen();
         this.getContext().save();

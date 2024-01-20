@@ -1,5 +1,6 @@
 export class Score {
-    constructor(limit, started_at,finished_at, products) {
+    constructor(limit, started_at, finished_at, products, indivual = null) {
+        this.indivual = indivual;
         this.spaces = 0;
         this.prices = 0;
         this.started_at = started_at;

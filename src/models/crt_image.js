@@ -6,7 +6,15 @@ export class CrtImage extends BaseView {
      *
      * @param {Scene} scene
      */
-    constructor(screen, image, x, y, width, height, color = "rgba(0, 255, 0, 0.2)") {
+    constructor(
+        screen,
+        image,
+        x,
+        y,
+        width,
+        height,
+        color = "rgba(0, 255, 0, 0.2)"
+    ) {
         super("crt_image", screen);
         this.image_src = image;
         this.width = width;
@@ -18,6 +26,16 @@ export class CrtImage extends BaseView {
         this.point_position = y;
         this.point_counter = 0;
         this._init();
+    }
+
+    setX(x) {
+        this.x = x;
+        return this;
+    }
+
+    setY(y) {
+        this.y = y;
+        return this;
     }
 
     _init() {
@@ -38,21 +56,21 @@ export class CrtImage extends BaseView {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 
         ctx.restore();
-        this._drawEffect(ctx)
+        this._drawEffect(ctx);
     }
 
     _drawEffect(ctx) {
-        if(this.point_counter+this.y+1>this.y+this.height-2)  this.point_counter = 0;
+        if (this.point_counter + this.y + 1 > this.y + this.height - 2)
+            this.point_counter = 0;
         this.point_counter += 0.3;
-        var pos=this.point_counter+this.y;
+        var pos = this.point_counter + this.y;
         ctx.save();
-        ctx.beginPath();       
+        ctx.beginPath();
         ctx.moveTo(this.x, pos);
-        ctx.lineTo(this.x+this.width, pos);
+        ctx.lineTo(this.x + this.width, pos);
         ctx.strokeStyle = this.color;
         ctx.lineWidth = 3;
         ctx.stroke();
         ctx.restore();
-        
     }
 }

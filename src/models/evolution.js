@@ -80,7 +80,8 @@ export class Evolution {
             this.screen.evolution_limit,
             this.started_at,
             this.finished_at,
-            this.best_solution.getProducts()
+            this.best_solution.getProducts(),
+            this.best_solution
         );
         this.is_done = true;       
         return this.best_solution;
