@@ -110,6 +110,8 @@ export class InventoryScreen extends BaseView {
         this.equip_box.unselectAll();
         this.equip_box.blur();
         this.screen.startUserSession();
+        this.product_selector.reset();
+        this.equip_box.reset();
     }
 
     onClose() {
@@ -184,6 +186,11 @@ export class InventoryScreen extends BaseView {
     }
 
     getFocused() {
+        if (this.product_selector.is_focus && this.equip_box.is_focus) {
+            this.product_selector.blur();
+            this.equip_box.blur();
+            return null;
+        }
         if (this.product_selector.is_focus) return this.product_selector;
         if (this.equip_box.is_focus) return this.equip_box;
         return null;
@@ -201,7 +208,7 @@ export class InventoryScreen extends BaseView {
 
     __checkKeyUp(e) {
         if (!this.isCurrentScene()) return;
-        e = e || window.event;       
+        e = e || window.event;
         switch (e.keyCode) {
             case 9:
                 this._pressTab();
@@ -220,7 +227,7 @@ export class InventoryScreen extends BaseView {
             }
             this._focusEquipBox();
             return;
-        }       
+        }
         focused.name == "equip_box"
             ? this._focusInventoryBox()
             : this._focusEquipBox();

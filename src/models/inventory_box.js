@@ -33,10 +33,7 @@ export class InventoryBox extends ProductSelector {
         this.equip_sound.play();
         this.onEquip(this.getSelected());
         this.removeItem(this.getSelected());
-        this.selectIndex(this.selected_item_index);
-       
-
-
+        this.selectIndex(this.selected_item_index);       
     }
 
  

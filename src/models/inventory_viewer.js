@@ -127,8 +127,9 @@ export class InventoryViewer extends BaseView {
         ctx.font = "9px Arial";
         ctx.fillStyle = "yellow";
         var y = 132 + line * 9 + text_size.fontBoundingBoxAscent / 2;
-        ctx.fillText(key, 6, y);
+        var x=6
+        ctx.fillText(key, x, y);
         ctx.fillStyle = "white";
-        ctx.fillText(value, 6 + text_size.width, y);
+        ctx.fillText(value, x + 50, y);
     }
 }

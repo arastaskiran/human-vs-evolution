@@ -30,7 +30,7 @@ export class Match extends BaseView {
         var total_w = w * 2 + padding;
         var x = this.screenWidth() / 2 - total_w / 2;
 
-        this.inspect_button = new Button(
+        this.play_again_button = new Button(
             this.screen,
             "PLAY AGAIN",
             "#E53935",
@@ -40,7 +40,7 @@ export class Match extends BaseView {
             w,
             h
         );
-        this.play_again_button = new Button(
+        this.inspect_button = new Button(
             this.screen,
             "INSPECT",
             "#22b324",
@@ -71,12 +71,15 @@ export class Match extends BaseView {
             },
             true
         );
+        this.inspect_button.hide();
+        this.play_again_button.hide();
     }
 
     __inspectGame() {}
 
     __playAgain() {
-        this.screen.setView("home");
+        console.log("xxxxxx");
+        this.screen.setView("inventory");
     }
 
     __checkKeyUp(e) {
