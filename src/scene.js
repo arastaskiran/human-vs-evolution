@@ -4,6 +4,7 @@ import { HomeScreen } from "./views/vw_home";
 import { InventoryScreen } from "./views/vw_inventory";
 import { BaseScene } from "./base_scane";
 import { Match } from "./views/vw_match";
+import { WinnerInventory } from "./views/vw_winner_inventory";
 
 export class Scene extends BaseScene {
     /**
@@ -18,8 +19,9 @@ export class Scene extends BaseScene {
             home: new HomeScreen(this),
             inventory: new InventoryScreen(this),
             match: new Match(this),
+            winner_inventory: new WinnerInventory(this),
         };
-        this.setView("inventory");
+        this.setView("winner_inventory");
         this.setFPS(config.fps);
         this._srartGame();
     }

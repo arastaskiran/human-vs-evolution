@@ -77,8 +77,7 @@ export class Match extends BaseView {
 
     __inspectGame() {}
 
-    __playAgain() {
-        console.log("xxxxxx");
+    __playAgain() {       
         this.screen.setView("inventory");
     }
 
@@ -152,7 +151,7 @@ export class Match extends BaseView {
         this.ai_score = this.screen.ai.score;
         this.am_i_win = this.ai_score.amIWin(this.lucy_score);
         this.solved = true;
-        console.log(this);
+        
     }
 
     _drawGameOver() {

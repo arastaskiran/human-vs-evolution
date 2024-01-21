@@ -134,6 +134,10 @@ export class Config {
             "https://assets.humanvsevolution.com/cargo_game/menuitemchange.wav";
         this.flawless_victory_sound =
             "https://assets.humanvsevolution.com/cargo_game/flawless-victory.wav";
+        this.cash_sound =
+            "https://assets.humanvsevolution.com/cargo_game/cash.wav";
+        this.soft_hit =
+            "https://assets.humanvsevolution.com/cargo_game/soft_hit.wav";
     }
 
     mapConfig(data) {
