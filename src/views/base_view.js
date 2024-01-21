@@ -12,8 +12,8 @@ export class BaseView extends EvolutionScene {
     update() {}
     onClose() {}
 
-    fixFloat(val,dec=2){
-        return parseFloat(val).toFixed(dec)
+    fixFloat(val, dec = 2) {
+        return parseFloat(val).toFixed(dec);
     }
 
     getContext() {
@@ -69,25 +69,25 @@ export class BaseView extends EvolutionScene {
         );
     }
     invertColor(hex) {
-        if (hex.indexOf('#') === 0) {
+        if (hex.indexOf("#") === 0) {
             hex = hex.slice(1);
-        }       
+        }
         if (hex.length === 3) {
             hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
         }
         if (hex.length !== 6) {
-            throw new Error('Invalid HEX color.');
+            throw new Error("Invalid HEX color.");
         }
-       
+
         var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
             g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-            b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);       
-        return '#' + this.padZero(r) + this.padZero(g) + this.padZero(b);
+            b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+        return "#" + this.padZero(r) + this.padZero(g) + this.padZero(b);
     }
 
     padZero(str, len) {
         len = len || 2;
-        var zeros = new Array(len).join('0');
+        var zeros = new Array(len).join("0");
         return (zeros + str).slice(-len);
     }
 
@@ -115,7 +115,7 @@ export class BaseView extends EvolutionScene {
         } else {
             radius = { ...{ tl: 0, tr: 0, br: 0, bl: 0 }, ...radius };
         }
-        ctx.save();     
+        ctx.save();
 
         ctx.beginPath();
         ctx.moveTo(x + radius.tl, y);
@@ -145,6 +145,7 @@ export class BaseView extends EvolutionScene {
     }
 
     isCurrentScene() {
+        if (!this.status) return false;
         return this.screen.current_screen == this.name;
     }
 }

@@ -65,9 +65,9 @@ export class Match extends BaseView {
         };
 
         document.addEventListener(
-            "keyup",
+            "keydown",
             function (e) {
-                self.__checkKeyUp(e);
+                self.__checkKeyDown(e);
             },
             true
         );
@@ -75,23 +75,28 @@ export class Match extends BaseView {
         this.play_again_button.hide();
     }
 
-    __inspectGame() {}
+    __inspectGame() {
+        this.screen.setView("winner_inventory");
+    }
 
-    __playAgain() {       
+    __playAgain() {
         this.screen.setView("inventory");
     }
 
-    __checkKeyUp(e) {
+    __checkKeyDown(e) {
         if (!this.isCurrentScene()) return;
         e = e || window.event;
         switch (e.keyCode) {
             case 27:
+                e.stopImmediatePropagation();  
                 this.__playAgain();
                 break;
             case 13:
+                e.stopImmediatePropagation();  
                 this.__inspectGame();
                 break;
             case 46:
+                e.stopImmediatePropagation();  
                 this.__playAgain();
                 break;
         }
@@ -151,7 +156,6 @@ export class Match extends BaseView {
         this.ai_score = this.screen.ai.score;
         this.am_i_win = this.ai_score.amIWin(this.lucy_score);
         this.solved = true;
-        
     }
 
     _drawGameOver() {

@@ -11,7 +11,7 @@ export class ProgressBar extends BaseView {
         this.progress = 0;
         this.value = 0;
         this.min_val = 0;
-        this.max_val = 0;
+        this.max_val = 100;
         this.use_limit_values = true;
         this.show_progress = true;
         this.limit_padding = 2;

@@ -70,6 +70,13 @@ export class InventoryScreen extends BaseView {
             },
             true
         );
+        document.addEventListener(
+            "keydown",
+            function (e) {
+                self.__checkKeyDown(e);
+            },
+            true
+        );
     }
 
     _startGame() {
@@ -123,7 +130,6 @@ export class InventoryScreen extends BaseView {
     }
 
     update() {
-        this.clearScreen();
         this.drawBG();
         this.drawHB();
         this.drawUser();
@@ -186,11 +192,6 @@ export class InventoryScreen extends BaseView {
     }
 
     getFocused() {
-        if (this.product_selector.is_focus && this.equip_box.is_focus) {
-            this.product_selector.blur();
-            this.equip_box.blur();
-            return null;
-        }
         if (this.product_selector.is_focus) return this.product_selector;
         if (this.equip_box.is_focus) return this.equip_box;
         return null;
@@ -211,10 +212,23 @@ export class InventoryScreen extends BaseView {
         e = e || window.event;
         switch (e.keyCode) {
             case 9:
+                e.stopImmediatePropagation();
                 this._pressTab();
                 break;
             case 32:
+                e.stopImmediatePropagation();
                 this._pressSpace();
+                break;
+        }
+    }
+
+    __checkKeyDown(e) {
+        if (!this.isCurrentScene()) return;
+        e = e || window.event;
+        switch (e.keyCode) {
+            case 13:
+                e.stopImmediatePropagation();
+                this._pressEnter();
                 break;
         }
     }
@@ -234,12 +248,14 @@ export class InventoryScreen extends BaseView {
     }
 
     _focusInventoryBox() {
+        this._sanitFocus();
         this.equip_box.unselectAll();
         this.equip_box.blur();
         return this.product_selector.selectAndFocus();
     }
 
     _focusEquipBox() {
+        this._sanitFocus();
         this.product_selector.unselectAll();
         this.product_selector.blur();
         return this.equip_box.selectAndFocus();
@@ -304,5 +320,24 @@ export class InventoryScreen extends BaseView {
         ctx.restore();
     }
 
+    _sanitFocus() {
+        if (this.product_selector.is_focus && this.equip_box.is_focus) {
+            this.product_selector.blur();
+            this.equip_box.blur();
+        }
+    }
+
     _pressSpace() {}
+
+    _pressEnter() {
+        if (this.hb.isDead()) {
+            this._startGame();
+        }
+        if (this.getFocused() != null) {          
+            return;
+        }
+        if (this.equip_box.getInventoryLength() > 0) {
+            this._startGame();
+        }
+    }
 }

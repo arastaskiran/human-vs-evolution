@@ -6,7 +6,6 @@ import { EvolutionScene } from "./models/evolution_scene";
 import { OrientationChange } from "./views/vw_change_orient";
 import { Score } from "./models/score";
 
-
 export class BaseScene extends EvolutionScene {
     /**
      *
@@ -138,7 +137,7 @@ export class BaseScene extends EvolutionScene {
         if (typeof this.screens[this.current_screen] !== "undefined") {
             this.screens[this.current_screen].close();
         }
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);       
+        this.clearScreen();
         this.screens[view_name].open();
         this.current_screen = view_name;
     }
@@ -148,8 +147,13 @@ export class BaseScene extends EvolutionScene {
             self.screen_protection.update();
             return;
         }
-        self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
+
+        self.clearScreen();
         self._getCurrentScreen().update();
+    }
+
+    clearScreen() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     _mobileCheck() {

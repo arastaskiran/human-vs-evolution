@@ -63,9 +63,9 @@ export class WinnerInventory extends BaseView {
         };
 
         document.addEventListener(
-            "keyup",
+            "keydown",
             function (e) {
-                self.__checkKeyUp(e);
+                self.__checkKeyDown(e);
             },
             true
         );
@@ -79,17 +79,20 @@ export class WinnerInventory extends BaseView {
         this.screen.setView("inventory");
     }
 
-    __checkKeyUp(e) {
+    __checkKeyDown(e) {
         if (!this.isCurrentScene()) return;
         e = e || window.event;
         switch (e.keyCode) {
             case 27:
+                e.stopImmediatePropagation(); 
                 this.__playAgain();
                 break;
             case 13:
+                e.stopImmediatePropagation(); 
                 this.__inspectGame();
                 break;
             case 46:
+                e.stopImmediatePropagation(); 
                 this.__playAgain();
                 break;
         }

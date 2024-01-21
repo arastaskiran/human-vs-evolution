@@ -188,7 +188,7 @@ export class ProductSelector extends BaseView {
     }
 
     focus() {
-        if (this.is_focus) return false;
+        if (this.is_focus || this.getInventoryLength() == 0) return false;
         this.is_focus = true;
         return true;
     }
@@ -222,6 +222,7 @@ export class ProductSelector extends BaseView {
             return;
         if (this.button != null) {
             if (this.button.inBounds(e.clientX, e.clientY)) {
+                e.stopImmediatePropagation(); 
                 this._buttonClick();
                 return;
             }
@@ -296,27 +297,31 @@ export class ProductSelector extends BaseView {
         e = e || window.event;
         switch (e.keyCode) {
             case 37:
+                e.stopImmediatePropagation();
                 this._pressLeft();
                 break;
             case 38:
+                e.stopImmediatePropagation();
                 this._pressUp();
                 break;
             case 39:
+                e.stopImmediatePropagation();
                 this._pressRight();
                 break;
             case 40:
+                e.stopImmediatePropagation();
                 this._pressDown();
                 break;
             case 27:
+                e.stopImmediatePropagation();
                 this._pressESC();
                 break;
             case 13:
+                e.stopImmediatePropagation();
                 this._pressEnter();
-                break;
-            case 9:
-                this._pressTab();
-                break;
+                break;          
             case 46:
+                e.stopImmediatePropagation();
                 this._pressDelete();
                 break;
         }

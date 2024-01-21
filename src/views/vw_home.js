@@ -18,7 +18,6 @@ export class HomeScreen extends BaseView {
         );
         this._init();
 
-        this.play_button.visible();
         this.hb = new HeartBeat(screen, 50, 50, 70, 30, "red");
     }
 
@@ -31,7 +30,12 @@ export class HomeScreen extends BaseView {
     }
 
     onLoad() {
+        this.play_button.visible();
         this.screen.startUserSession();
+    }
+
+    onClose() {
+        this.play_button.hide();
     }
 
     update() {
