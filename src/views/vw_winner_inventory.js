@@ -38,6 +38,8 @@ export class WinnerInventory extends BaseView {
         this.total_space = 0;
         this.total_price = 0;
         this.scene_timer = 0;
+        this.product_index=0;
+        this.current_product=null; 
         this.winner_score = this.screen.ai.score.amIWin(this.screen.score)
             ? this.screen.score
             : this.screen.ai.score;
@@ -65,7 +67,11 @@ export class WinnerInventory extends BaseView {
     }
 
     onClose() {
-        this.scene_timer = 0;      
+        this.scene_timer = 0;   
+        this.total_space = 0;
+        this.total_price = 0;      
+        this.product_index=0;  
+        this.current_product=null; 
     }
     update() {        
         this.roundRect(
