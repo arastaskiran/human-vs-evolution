@@ -38,7 +38,7 @@ The rules of the Cargo Game are as follows:
 
 <br/>
 
-<img width="645" src="https://assets.humanvsevolution.com/cargo_game/banner.webp" height="500">
+<img width="645" src="https://raw.githubusercontent.com/arastaskiran/human-vs-evolution/main/banner.webp" height="500">
 <br/>
 <br/>
 You can see the live demo by clicking the link below.
