@@ -24,7 +24,7 @@ export class CrtImage extends BaseView {
         this.color = color;
         this.image = new Image();
         this.point_position = y;
-        this.point_counter = 0;
+        this.point_counter = 0;       
         this._init();
     }
 
@@ -39,6 +39,7 @@ export class CrtImage extends BaseView {
     }
 
     _init() {
+        if (this.image_src == null) return;
         var self = this;
         this.image.src = this.image_src;
         this.image.onload = function () {
@@ -57,6 +58,11 @@ export class CrtImage extends BaseView {
 
         ctx.restore();
         this._drawEffect(ctx);
+    }
+
+    setImage(image) {
+        this.image = image;
+        return this;
     }
 
     _drawEffect(ctx) {

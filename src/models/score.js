@@ -30,4 +30,15 @@ export class Score {
             this.duration <= score.duration
         );
     }
+
+    getProductLength() {
+        return this.products.length;
+    }
+
+    getProductIndex(index) {
+        if (index >= this.getProductLength()) {
+            return null;
+        }
+        return this.products[index];
+    }
 }

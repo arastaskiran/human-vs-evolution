@@ -92,7 +92,7 @@ export class Match extends BaseView {
                 this.__playAgain();
                 break;
             case 13:
-                e.stopImmediatePropagation();  
+                //e.stopImmediatePropagation();  
                 this.__inspectGame();
                 break;
             case 46:
@@ -138,7 +138,7 @@ export class Match extends BaseView {
     update() {
         this._drawGameOver();
         if (!this.solved) return;
-        this._drawWinner();
+        this._drawWinner();     
     }
 
     initAI() {

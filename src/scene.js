@@ -21,7 +21,7 @@ export class Scene extends BaseScene {
             match: new Match(this),
             winner_inventory: new WinnerInventory(this),
         };
-        this.setView("winner_inventory");
+        this.setView("inventory");
         this.setFPS(config.fps);
         this._srartGame();
     }

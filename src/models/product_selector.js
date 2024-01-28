@@ -316,12 +316,10 @@ export class ProductSelector extends BaseView {
                 e.stopImmediatePropagation();
                 this._pressESC();
                 break;
-            case 13:
-                e.stopImmediatePropagation();
+            case 13:               
                 this._pressEnter();
                 break;          
-            case 46:
-                e.stopImmediatePropagation();
+            case 46:                
                 this._pressDelete();
                 break;
         }

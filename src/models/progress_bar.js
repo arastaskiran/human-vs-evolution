@@ -71,11 +71,11 @@ export class ProgressBar extends BaseView {
         this.__drawProgressValue();
     }
 
-    __getX(add = 0) {
+    getX(add = 0) {
         if (!this.center) return this.x + add;
         return this.screenWidth() / 2 - this.__getTotalWidth() / 2 + add;
     }
-    __getY(add = 0) {
+    getY(add = 0) {
         return this.y + add;
     }
 
@@ -97,11 +97,11 @@ export class ProgressBar extends BaseView {
     }
 
     __getProgressBeginX(add = 0) {
-        if (!this.use_limit_values) return this.__getX(add);
+        if (!this.use_limit_values) return this.getX(add);
         var ctx = this.getContext();
         ctx.font = this.limit_font;
         return (
-            this.__getX(ctx.measureText("0%").width + this.limit_padding) + add
+            this.getX(ctx.measureText("0%").width + this.limit_padding) + add
         );
     }
 
@@ -110,19 +110,19 @@ export class ProgressBar extends BaseView {
         ctx.save();
         ctx.font = this.limit_font;
 
-        var x = this.__getX();
+        var x = this.getX();
         if (this.use_limit_values) {
             ctx.fillStyle = "white";
             var text = "0%";
             var mt = ctx.measureText(text);
             var y_fix = this.h / 2 + mt.fontBoundingBoxAscent / 2;
-            ctx.fillText(text, x, this.__getY(y_fix));
-            x = this.__getX(this.__getLimitPadding() + mt.width);
+            ctx.fillText(text, x, this.getY(y_fix));
+            x = this.getX(this.__getLimitPadding() + mt.width);
         }
 
         ctx.strokeStyle = this.__getProgressColor();
 
-        ctx.strokeRect(x, this.__getY(), this.w, this.h);
+        ctx.strokeRect(x, this.getY(), this.w, this.h);
         if (this.use_limit_values) {
             text = "100%";
             mt = ctx.measureText(text);
@@ -130,7 +130,7 @@ export class ProgressBar extends BaseView {
             ctx.fillText(
                 text,
                 x + this.w + this.limit_padding,
-                this.__getY(y_fix)
+                this.getY(y_fix)
             );
         }
         ctx.restore();
@@ -142,7 +142,7 @@ export class ProgressBar extends BaseView {
         var w = (this.progress * this.w) / 100;
 
         ctx.fillStyle = this.lightColor(this.__getProgressColor(), 50);
-        ctx.fillRect(this.__getProgressBeginX(), this.__getY(), w, this.h);
+        ctx.fillRect(this.__getProgressBeginX(), this.getY(), w, this.h);
 
         ctx.fillStyle = this.invertColor(this.__getProgressColor());
         var beginx=this.__getProgressBeginX();
@@ -151,7 +151,7 @@ export class ProgressBar extends BaseView {
         var mt = ctx.measureText(text);
         var y_fix = this.h / 2 + mt.fontBoundingBoxAscent / 2;
         var x = beginx + this.w / 2 - mt.width / 2;
-        ctx.fillText(text, x, this.__getY(y_fix-1));
+        ctx.fillText(text, x, this.getY(y_fix-1));
 
         ctx.restore();
     }

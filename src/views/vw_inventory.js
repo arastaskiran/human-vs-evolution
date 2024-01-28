@@ -130,6 +130,7 @@ export class InventoryScreen extends BaseView {
     }
 
     update() {
+       
         this.drawBG();
         this.drawHB();
         this.drawUser();
@@ -139,7 +140,8 @@ export class InventoryScreen extends BaseView {
         this.drawSelected();
         this.drawStartButton();
         this._drawTimeRemain();
-        this._drawLimit();
+        this._drawLimit();    
+       
     }
 
     drawBG() {
@@ -333,7 +335,7 @@ export class InventoryScreen extends BaseView {
         if (this.hb.isDead()) {
             this._startGame();
         }
-        if (this.getFocused() != null) {          
+        if (this.getFocused() != null) {
             return;
         }
         if (this.equip_box.getInventoryLength() > 0) {
